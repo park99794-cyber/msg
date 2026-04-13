@@ -45,60 +45,22 @@ body { background:#000; min-height:100vh; }
 .login-btn { width:100%; padding:20px; background:linear-gradient(135deg,#0ea5e9,#38bdf8); color:#fff; border:none; border-radius:12px; font-size:20px; font-weight:700; cursor:pointer; letter-spacing:3px; }
 .login-error { color:#f87171; font-size:14px; text-align:center; margin-top:14px; display:none; }
 
-/* ===== ADMIN 화면 ===== */
-#adminScreen { display:none; }
 
-/* ── PANEL 1 (수직형 첫화면) ── */
-#adminPanel1 {
   display:flex; flex-direction:column; min-height:100vh;
   max-width:500px; margin:0 auto;
   background:linear-gradient(160deg,#0f172a,#1e293b);
   padding:30px 20px 0;
 }
-.p1-logo { font-family:"Arial Black",sans-serif; font-size:26px; font-weight:900; color:#fff; text-align:center; letter-spacing:3px; margin-bottom:18px; }
-.p1-mode-row { display:flex; gap:10px; justify-content:center; margin-bottom:22px; }
-.p1-badge { background:#ef4444; color:#fff; padding:8px 18px; border-radius:20px; font-size:13px; font-weight:700; }
-.p1-logout { background:rgba(148,163,184,0.2); color:#e2e8f0; border:1px solid rgba(148,163,184,0.3); padding:8px 18px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; }
-.p1-section { background:#1e2d3d; border-radius:12px; padding:16px; margin-bottom:14px; }
-.p1-section-title { color:#fff; font-size:15px; font-weight:700; margin-bottom:12px; }
-.p1-id-input { width:100%; padding:14px 16px; background:rgba(15,23,42,0.8); border:1px solid rgba(148,163,184,0.3); border-radius:10px; color:#fff; font-size:14px; outline:none; margin-bottom:12px; text-align:center; }
-.p1-id-input::placeholder { color:#475569; }
-.p1-id-input:focus { border-color:#38bdf8; }
-.p1-btn-create { width:100%; padding:14px; background:linear-gradient(135deg,#10b981,#059669); color:#fff; border:none; border-radius:10px; font-size:16px; font-weight:700; cursor:pointer; }
-.p1-id-list { max-height:150px; overflow-y:auto; margin-top:10px; }
-.p1-id-item { display:flex; justify-content:space-between; align-items:center; padding:8px 10px; background:#0f172a; border-radius:6px; margin-bottom:4px; }
-.p1-id-text { color:#fff; font-size:13px; font-weight:700; font-family:monospace; }
-.p1-btn-del { background:#ef4444; color:#fff; border:none; border-radius:4px; padding:4px 10px; font-size:11px; font-weight:700; cursor:pointer; }
-.p1-pagination { display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; }
-.p1-page-btn { width:28px; height:28px; background:#3b82f6; color:#fff; border:none; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; }
-.p1-no-member { color:#64748b; font-size:14px; text-align:center; padding:8px 0; }
-.p1-control-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-.p1-control-label { color:#fff; font-size:14px; }
-.p1-toggle { position:relative; width:52px; height:28px; }
-.p1-toggle input { opacity:0; width:0; height:0; }
-.p1-slider { position:absolute; cursor:pointer; inset:0; background:#475569; border-radius:26px; transition:0.3s; }
-.p1-slider:before { position:absolute; content:""; height:22px; width:22px; left:3px; bottom:3px; background:white; border-radius:50%; transition:0.3s; }
-input:checked + .p1-slider { background:#10b981; }
-input:checked + .p1-slider:before { transform:translateX(24px); }
-.p1-status { padding:8px 12px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); border-radius:6px; color:#6ee7b7; font-size:12px; }
-.p1-spacer { flex:1; }
-.p1-bet-btn { display:block; width:100%; padding:22px; background:#000; color:#fff; border:none; font-size:24px; font-weight:900; letter-spacing:4px; cursor:pointer; text-align:center; flex-shrink:0; }
-.p1-bet-btn:hover { background:#111; }
 
-/* ── PANEL 3 (설정2: 11~20번) ── */
-#adminPanel3 {
   display:none; height:100vh;
   background:#0d0d1a; padding:8px;
   overflow-x:auto; overflow-y:hidden;
 }
 
-/* ── PANEL 2 (가로형 PC 메뉴) ── */
-#adminPanel2 {
   display:none; height:100vh;
   background:#0d0d1a; padding:8px;
   overflow-x:auto; overflow-y:hidden;
 }
-.p2-wrap {
   display:flex; gap:8px;
   height:calc(100vh - 16px);
   min-width:1000px;
@@ -106,103 +68,63 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
 }
 
 /* 실시간 열 */
-.p2-rt {
   width:160px; flex-shrink:0;
   background:#111; border-radius:10px;
   padding:14px 8px;
   display:flex; flex-direction:column; align-items:center; gap:8px;
 }
-.p2-rt-title { color:#fff; font-size:22px; font-weight:900; letter-spacing:3px; margin-bottom:2px; }
-.p2-circle-r {
   width:118px; height:118px; border-radius:50%;
   background:radial-gradient(circle at 35% 35%,#ff4444,#cc0000,#880000);
   box-shadow:0 0 28px rgba(200,0,0,0.4),inset 0 4px 12px rgba(255,255,255,0.15);
   border:3px solid #666;
   display:flex; align-items:center; justify-content:center; cursor:pointer;
 }
-.p2-circle-b {
   width:118px; height:118px; border-radius:50%;
   background:radial-gradient(circle at 35% 35%,#4444ff,#0000cc,#000088);
   box-shadow:0 0 28px rgba(0,0,200,0.4),inset 0 4px 12px rgba(255,255,255,0.15);
   border:3px solid #666;
   display:flex; align-items:center; justify-content:center; cursor:pointer;
 }
-.p2-c-input { width:88px; background:transparent; border:none; border-bottom:2px solid rgba(255,255,255,0.6); color:#fff; font-size:15px; font-weight:900; text-align:center; outline:none; -moz-appearance:textfield; }
-.p2-c-input::-webkit-outer-spin-button,.p2-c-input::-webkit-inner-spin-button { -webkit-appearance:none; }
-.p2-c-input::placeholder { color:rgba(255,255,255,0.45); font-size:11px; font-weight:400; }
-.p2-ok { padding:7px 20px; background:linear-gradient(135deg,#334155,#1e293b); color:#fff; border:2px solid #4a5568; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; letter-spacing:2px; }
-.p2-ok:hover { background:linear-gradient(135deg,#4a5568,#334155); }
-.p2-prev { display:flex; align-items:center; gap:5px; color:#94a3b8; font-size:13px; font-weight:700; cursor:pointer; margin-top:auto; padding:6px 0; }
-.p2-prev:hover { color:#e2e8f0; }
 
 /* 슬롯 열 */
-.p2-slot {
   width:192px; flex-shrink:0;
   background:#111; border-radius:10px;
   padding:14px 10px;
   display:flex; flex-direction:column; align-items:center; gap:8px;
   overflow:hidden;
 }
-.p2-slot-grid { display:flex; flex-direction:column; gap:6px; width:100%; }
-.p2-slot-row { display:flex; gap:6px; justify-content:center; }
-.p2-dot {
   width:50px; height:50px; border-radius:50%;
   background:#1a2535; border:2px solid #2a3545;
   display:flex; align-items:center; justify-content:center;
   color:#fff; font-size:12px; font-weight:900;
   transition:all 0.2s; flex-shrink:0;
 }
-.p2-dot.active { background:#cc0000; border-color:#ff4444; box-shadow:0 0 12px rgba(255,68,68,0.8); }
-.p2-slot-spacer { flex:1; min-height:8px; }
-.p2-reset-btn { width:100%; padding:10px; background:linear-gradient(135deg,#334155,#1e293b); color:#fff; border:2px solid #4a5568; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; letter-spacing:2px; margin-bottom:4px; }
-.p2-reset-btn:hover { background:linear-gradient(135deg,#4a5568,#334155); }
-.p2-logout-btn { width:100%; padding:10px; background:linear-gradient(135deg,#1e3a8a,#2563eb); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; letter-spacing:2px; }
 
 /* 베팅금설정 열 (10행 × 4열 - 세트별 독립) */
-.p2-bet {
   width:260px; flex-shrink:0;
   background:#111; border-radius:10px;
   padding:12px 8px;
   display:flex; flex-direction:column; gap:4px;
   overflow-y:auto;
 }
-.p2-col-title { color:#fff; font-size:15px; font-weight:900; text-align:center; letter-spacing:1px; margin-bottom:2px; flex-shrink:0; }
-.p2-ba-hdr-row { display:flex; gap:2px; align-items:center; margin-bottom:2px; flex-shrink:0; }
-.p2-ba-hdr-num { width:16px; flex-shrink:0; }
-.p2-ba-hdr-lbl { flex:1; text-align:center; color:#6b7a99; font-size:10px; font-weight:700; }
-.p2-ba-row { display:flex; gap:2px; align-items:center; flex-shrink:0; }
-.p2-ba-num { color:#556; font-size:11px; font-weight:900; width:16px; text-align:right; flex-shrink:0; }
-.p2-ba-inp {
   flex:1; min-width:0; padding:4px 2px;
   background:#1a2535; border:1px solid #2a3545;
   border-radius:4px; color:#fff;
   font-size:10px; font-weight:700; text-align:right;
   -moz-appearance:textfield;
 }
-.p2-ba-inp::-webkit-outer-spin-button,.p2-ba-inp::-webkit-inner-spin-button { -webkit-appearance:none; }
-.p2-ba-inp:focus { outline:none; border-color:#3b82f6; }
 
 /* 전체 확인 버튼 */
-.p2-confirm-all {
   width:100%; padding:18px; flex-shrink:0;
   background:linear-gradient(135deg,#1e3a5f,#1d4ed8);
   color:#fff; border:3px solid #60a5fa;
   border-radius:12px; font-size:22px; font-weight:900;
   cursor:pointer; letter-spacing:4px;
 }
-.p2-confirm-all:hover { background:linear-gradient(135deg,#2563eb,#1e40af); }
 
 /* 우측 (입력그림 + 베팅포지션) */
-.p2-right { flex:1; display:flex; flex-direction:column; gap:8px; min-width:0; }
-.p2-box { background:#111; border-radius:10px; padding:10px; flex:1; display:flex; flex-direction:column; }
-.p2-box-title { color:#fff; font-size:14px; font-weight:900; margin-bottom:8px; letter-spacing:1px; }
 
 /* 입력그림 (10행 × 8열) */
-.p2-ig-wrap { display:flex; gap:6px; flex:1; }
-.p2-ig-rows { flex:1; display:flex; flex-direction:column; gap:3px; }
-.p2-ig-row { display:flex; gap:3px; align-items:center; }
-.p2-row-num { color:#556; font-size:11px; font-weight:900; width:14px; text-align:right; flex-shrink:0; }
-.p2-ig-cell {
   flex:1; height:26px; min-width:0;
   background:#1a2535; border:1px solid #2a3545;
   border-radius:4px; color:#445;
@@ -210,16 +132,8 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
   cursor:pointer; display:flex; align-items:center; justify-content:center;
   user-select:none; transition:all 0.12s;
 }
-.p2-ig-cell.cp { background:#0a1a5a; border-color:#3b82f6; color:#60a5fa; }
-.p2-ig-cell.cb { background:#5a0a0a; border-color:#ef4444; color:#f87171; }
-.p2-ig-cell:hover { border-color:#556; }
 
 /* 베팅포지션 (10행 × 4열, 1-5/6-10 분할) */
-.p2-bp-wrap { display:flex; gap:6px; flex:1; }
-.p2-bp-halves { flex:1; display:flex; gap:10px; }
-.p2-bp-half { flex:1; display:flex; flex-direction:column; gap:3px; }
-.p2-bp-row { display:flex; gap:3px; align-items:center; }
-.p2-bp-cell {
   flex:1; height:26px; min-width:0;
   background:#1a2535; border:1px solid #2a3545;
   border-radius:4px; color:#445;
@@ -227,12 +141,8 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
   cursor:pointer; display:flex; align-items:center; justify-content:center;
   user-select:none; transition:all 0.12s;
 }
-.p2-bp-cell.cp { background:#0a1a5a; border-color:#3b82f6; color:#60a5fa; }
-.p2-bp-cell.cb { background:#5a0a0a; border-color:#ef4444; color:#f87171; }
-.p2-bp-cell:hover { border-color:#556; }
 
 /* 세로 확인 버튼 */
-.p2-side-ok {
   writing-mode:vertical-rl; text-orientation:mixed;
   padding:14px 7px; align-self:stretch;
   background:linear-gradient(180deg,#334155,#1e293b);
@@ -240,7 +150,6 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
   border-radius:8px; font-size:14px; font-weight:700;
   cursor:pointer; letter-spacing:4px; flex-shrink:0;
 }
-.p2-side-ok:hover { background:linear-gradient(180deg,#4a5568,#334155); }
 
 /* 깜빡 애니메이션 */
 @keyframes blinkRedA { 0%,100%{box-shadow:0 0 28px rgba(200,0,0,0.4);border-color:#666;} 50%{box-shadow:0 0 60px rgba(255,0,0,1),0 0 100px rgba(255,0,0,0.5);border-color:#f00;} }
@@ -332,229 +241,6 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
 </div>
 
 <!-- ===== A 관리자 화면 ===== -->
-<div id="adminScreen">
-
-  <!-- Panel 1 -->
-  <div id="adminPanel1">
-    <div class="p1-logo">MBBC WORLD</div>
-    <div class="p1-mode-row">
-      <span class="p1-badge">● SENDER MODE</span>
-      <button class="p1-logout" onclick="adminLogout()">로그아웃</button>
-    </div>
-    <div class="p1-section">
-      <div class="p1-section-title">회원 ID 관리</div>
-      <div class="p1-pagination" id="pagination"></div>
-      <input type="text" class="p1-id-input" id="idInput" placeholder="특정 ID 입력 (비우면 랜덤 생성)">
-      <button class="p1-btn-create" onclick="createId()">새 ID 생성</button>
-      <div class="p1-id-list" id="idList"><div class="p1-no-member">등록된 회원이 없습니다</div></div>
-    </div>
-    <div class="p1-section">
-      <div class="p1-section-title">PC 접근 제어</div>
-      <div class="p1-control-row">
-        <span class="p1-control-label">컴퓨터용 동영상 재생</span>
-        <label class="p1-toggle"><input type="checkbox" id="pcToggle" checked onchange="togglePC()"><span class="p1-slider"></span></label>
-      </div>
-      <div class="p1-status" id="pcStatus">✓ 현재 컴퓨터에서 동영상 재생이 가능합니다</div>
-    </div>
-    <div class="p1-spacer"></div>
-    <button class="p1-bet-btn" onclick="showPanel2()">베팅 관련 설정</button>
-  </div>
-
-  <!-- Panel 2 -->
-  <div id="adminPanel2">
-    <div class="p2-wrap">
-
-      <!-- 슬롯 (2×5=10개) -->
-      <div class="p2-slot">
-        <div class="p2-slot-grid">
-          <div class="p2-slot-row"><div class="p2-dot" id="slot0"></div><div class="p2-dot" id="slot1"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot2"></div><div class="p2-dot" id="slot3"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot4"></div><div class="p2-dot" id="slot5"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot6"></div><div class="p2-dot" id="slot7"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot8"></div><div class="p2-dot" id="slot9"></div></div>
-        </div>
-        <div class="p2-slot-spacer"></div>
-        <button class="p2-reset-btn" onclick="doReset()">리 셋</button>
-        <button class="p2-logout-btn" onclick="adminLogout()">로그아웃</button>
-        <div class="p2-prev" onclick="prevStep()" style="margin-top:6px;">
-          <span style="font-size:18px;">←</span><span>전단계</span>
-        </div>
-      </div>
-
-      <!-- 베팅금설정 (10행 × 4열, 세트별) -->
-      <div class="p2-bet">
-        <div class="p2-col-title">베팅금설정</div>
-        <div class="p2-ba-hdr-row">
-          <span class="p2-ba-hdr-num"></span>
-          <span class="p2-ba-hdr-lbl">1단</span>
-          <span class="p2-ba-hdr-lbl">2단</span>
-          <span class="p2-ba-hdr-lbl">3단</span>
-          <span class="p2-ba-hdr-lbl">4단</span>
-          <span class="p2-ba-hdr-lbl">5단</span>
-          <span class="p2-ba-hdr-lbl">6단</span>
-        </div>
-        <div id="baGrid"></div>
-        <button style="width:100%;padding:10px;margin-top:6px;background:linear-gradient(135deg,#334155,#1e293b);color:#fff;border:2px solid #4a5568;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:2px;flex-shrink:0;" onclick="saveBaOnly()">확 인</button>
-        <button style="width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:2px solid #a78bfa;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" onclick="showPanel3()">설정 2 바로가기</button>
-      </div>
-
-      <!-- 입력그림 + 베팅포지션 -->
-      <div class="p2-right">
-
-        <!-- 입력그림 (10×8) -->
-        <div class="p2-box">
-          <div class="p2-box-title">입력 그림</div>
-          <div class="p2-ig-wrap">
-            <div class="p2-ig-rows" id="igRows"></div>
-          </div>
-        </div>
-
-        <!-- 베팅포지션 (10×4, 1~5/6~10) -->
-        <div class="p2-box">
-          <div class="p2-box-title">베팅포지션</div>
-          <div class="p2-bp-wrap">
-            <div class="p2-bp-halves">
-              <div class="p2-bp-half" id="bpLeft"></div>
-              <div class="p2-bp-half" id="bpRight"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 전체 확인 -->
-        <button class="p2-confirm-all" onclick="saveAll()">전체  확인</button>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Panel 3 (설정2: 11~20번) -->
-  <div id="adminPanel3">
-    <div class="p2-wrap">
-
-      <!-- 슬롯2 (2×5=10개, 11~20) -->
-      <div class="p2-slot">
-        <div class="p2-slot-grid">
-          <div class="p2-slot-row"><div class="p2-dot" id="slot10"></div><div class="p2-dot" id="slot11"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot12"></div><div class="p2-dot" id="slot13"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot14"></div><div class="p2-dot" id="slot15"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot16"></div><div class="p2-dot" id="slot17"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot18"></div><div class="p2-dot" id="slot19"></div></div>
-        </div>
-        <div class="p2-slot-spacer"></div>
-        <button class="p2-reset-btn" onclick="doReset2()">리 셋</button>
-        <button class="p2-logout-btn" onclick="adminLogout()">로그아웃</button>
-      </div>
-
-      <!-- 베팅금설정2 (10행 × 6열) -->
-      <div class="p2-bet">
-        <div class="p2-col-title">베팅금설정</div>
-        <div class="p2-ba-hdr-row">
-          <span class="p2-ba-hdr-num"></span>
-          <span class="p2-ba-hdr-lbl">1단</span>
-          <span class="p2-ba-hdr-lbl">2단</span>
-          <span class="p2-ba-hdr-lbl">3단</span>
-          <span class="p2-ba-hdr-lbl">4단</span>
-          <span class="p2-ba-hdr-lbl">5단</span>
-          <span class="p2-ba-hdr-lbl">6단</span>
-        </div>
-        <div id="baGrid2"></div>
-        <button style="width:100%;padding:10px;margin-top:6px;background:linear-gradient(135deg,#334155,#1e293b);color:#fff;border:2px solid #4a5568;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:2px;flex-shrink:0;" onclick="saveBaOnly2()">확 인</button>
-        <button style="width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:2px solid #a78bfa;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" onclick="showPanel4()">설정 3 바로가기</button>
-        <button style="width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#334155,#1e293b);color:#94a3b8;border:2px solid #4a5568;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" onclick="showPanel2()">← 설정 1 바로가기</button>
-      </div>
-
-      <!-- 입력그림2 + 베팅포지션2 -->
-      <div class="p2-right">
-
-        <!-- 입력그림2 (10×8, 11~20번) -->
-        <div class="p2-box">
-          <div class="p2-box-title">입력 그림 (11~20번)</div>
-          <div class="p2-ig-wrap">
-            <div class="p2-ig-rows" id="igRows2"></div>
-          </div>
-        </div>
-
-        <!-- 베팅포지션2 -->
-        <div class="p2-box">
-          <div class="p2-box-title">베팅포지션 (11~20번)</div>
-          <div class="p2-bp-wrap">
-            <div class="p2-bp-halves">
-              <div class="p2-bp-half" id="bpLeft2"></div>
-              <div class="p2-bp-half" id="bpRight2"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 전체 확인2 -->
-        <button class="p2-confirm-all" onclick="saveAll2()">전체  확인</button>
-
-      </div>
-    </div>
-  </div>
-  <!-- Panel 4 (설정3: 21~30번) -->
-  <div id="adminPanel4" style="display:none;">
-    <div class="p2-wrap">
-
-      <!-- 슬롯3 (2×5=10개, 21~30) -->
-      <div class="p2-slot">
-        <div class="p2-slot-grid">
-          <div class="p2-slot-row"><div class="p2-dot" id="slot20"></div><div class="p2-dot" id="slot21"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot22"></div><div class="p2-dot" id="slot23"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot24"></div><div class="p2-dot" id="slot25"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot26"></div><div class="p2-dot" id="slot27"></div></div>
-          <div class="p2-slot-row"><div class="p2-dot" id="slot28"></div><div class="p2-dot" id="slot29"></div></div>
-        </div>
-        <div class="p2-slot-spacer"></div>
-        <button class="p2-reset-btn" onclick="doReset3()">리 셋</button>
-        <button class="p2-logout-btn" onclick="adminLogout()">로그아웃</button>
-      </div>
-
-      <!-- 베팅금설정3 (10행 × 6열) -->
-      <div class="p2-bet">
-        <div class="p2-col-title">베팅금설정</div>
-        <div class="p2-ba-hdr-row">
-          <span class="p2-ba-hdr-num"></span>
-          <span class="p2-ba-hdr-lbl">1단</span>
-          <span class="p2-ba-hdr-lbl">2단</span>
-          <span class="p2-ba-hdr-lbl">3단</span>
-          <span class="p2-ba-hdr-lbl">4단</span>
-          <span class="p2-ba-hdr-lbl">5단</span>
-          <span class="p2-ba-hdr-lbl">6단</span>
-        </div>
-        <div id="baGrid3"></div>
-        <button style="width:100%;padding:10px;margin-top:6px;background:linear-gradient(135deg,#334155,#1e293b);color:#fff;border:2px solid #4a5568;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:2px;flex-shrink:0;" onclick="saveBaOnly3()">확 인</button>
-        <button style="width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#334155,#1e293b);color:#94a3b8;border:2px solid #4a5568;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" onclick="showPanel3()">← 설정 2 바로가기</button>
-      </div>
-
-      <!-- 입력그림3 + 베팅포지션3 -->
-      <div class="p2-right">
-
-        <!-- 입력그림3 (10×14, 21~30번) -->
-        <div class="p2-box">
-          <div class="p2-box-title">입력 그림 (21~30번)</div>
-          <div class="p2-ig-wrap">
-            <div class="p2-ig-rows" id="igRows3"></div>
-          </div>
-        </div>
-
-        <!-- 베팅포지션3 -->
-        <div class="p2-box">
-          <div class="p2-box-title">베팅포지션 (21~30번)</div>
-          <div class="p2-bp-wrap">
-            <div class="p2-bp-halves">
-              <div class="p2-bp-half" id="bpLeft3"></div>
-              <div class="p2-bp-half" id="bpRight3"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 전체 확인3 -->
-        <button class="p2-confirm-all" onclick="saveAll3()">전체  확인</button>
-
-      </div>
-    </div>
-  </div>
-</div><!-- end adminScreen -->
 
 <!-- ===== B 회원 화면 ===== -->
 <div id="memberScreen">
@@ -601,28 +287,14 @@ var a0_0x1678f5=a0_0xa7a4;(function(_0x90d1e1,_0x5aab1b){var _0xa50ce4=a0_0xa7a4
 <script>
 // ── 패널 전환 ──
 function showPanel2(){
-  document.getElementById('adminPanel1').style.display='none';
-  document.getElementById('adminPanel3').style.display='none';
-  document.getElementById('adminPanel4').style.display='none';
-  document.getElementById('adminPanel2').style.display='block';
   setTimeout(function(){initIgGrid();initBpGrid();initBaGrid();loadAdminSettings();},80);
 }
 function showPanel1(){
-  document.getElementById('adminPanel2').style.display='none';
-  document.getElementById('adminPanel3').style.display='none';
-  document.getElementById('adminPanel4').style.display='none';
-  document.getElementById('adminPanel1').style.display='flex';
 }
 function showPanel3(){
-  document.getElementById('adminPanel2').style.display='none';
-  document.getElementById('adminPanel4').style.display='none';
-  document.getElementById('adminPanel3').style.display='block';
   setTimeout(function(){initIgGrid2();initBpGrid2();initBaGrid2();loadAdminSettings2();},80);
 }
 function showPanel4(){
-  document.getElementById('adminPanel2').style.display='none';
-  document.getElementById('adminPanel3').style.display='none';
-  document.getElementById('adminPanel4').style.display='block';
   setTimeout(function(){initIgGrid3();initBpGrid3();initBaGrid3();loadAdminSettings3();},80);
 }
 
@@ -1367,7 +1039,6 @@ function togglePC(){
 
 // 로그아웃
 function adminLogout(){
-  document.getElementById('adminScreen').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('loginInput').value='';
   showPanel1();
@@ -1437,7 +1108,6 @@ const firebaseConfig={
 };
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
-const ADMIN_IDS=['MBBC-1203','MBBC-1205'];
 const COL_MEM='baccarat_members';
 const COL_SES='baccarat_sessions';
 const COL_SIG='baccarat_signal';
@@ -1548,38 +1218,3 @@ window.login=async function(){
   if(!input){err.textContent='아이디를 입력해주세요';err.style.display='block';return;}
   showLoading(true);
   try{
-    if(ADMIN_IDS.includes(input)){
-      window.currentUser={id:input,role:'admin'};
-      document.getElementById('loginScreen').style.display='none';
-      document.getElementById('adminScreen').style.display='block';
-      showPanel1();
-      loadAdminMembers();
-    } else {
-      var mem=await db.collection(COL_MEM).doc(input).get();
-      if(mem.exists){
-        var isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        if(isMobile){
-          var devId=getDeviceId();
-          var ses=await db.collection(COL_SES).doc(input).get();
-          if(ses.exists&&ses.data().deviceId&&ses.data().deviceId!==devId){
-            err.textContent='이미 다른 기기에서 접속 중입니다';err.style.display='block';showLoading(false);return;
-          }
-          await db.collection(COL_SES).doc(input).set({deviceId:devId,loginTime:new Date().toISOString()});
-        }
-        window.currentUser={id:input,role:'member'};
-        document.getElementById('loginScreen').style.display='none';
-        document.getElementById('memberScreen').style.display='flex';
-        loadFromStorage(); drawBoard();
-        startSignalListener(); startConfigListener();
-      } else {
-        err.textContent='등록되지 않은 아이디입니다';err.style.display='block';
-      }
-    }
-  }catch(e){err.textContent='오류: '+e.message;err.style.display='block';}
-  showLoading(false);
-};
-
-document.getElementById('loginInput').addEventListener('keydown',function(e){if(e.key==='Enter')window.login();});
-</script>
-</body>
-</html>
