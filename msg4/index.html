@@ -1218,3 +1218,29 @@ window.login=async function(){
   if(!input){err.textContent='아이디를 입력해주세요';err.style.display='block';return;}
   showLoading(true);
   try{
+    var mem=await db.collection(COL_MEM).doc(input).get();
+    if(mem.exists){
+      var isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if(isMobile){
+        var devId=getDeviceId();
+        var ses=await db.collection(COL_SES).doc(input).get();
+        if(ses.exists&&ses.data().deviceId&&ses.data().deviceId!==devId){
+          err.textContent='이미 다른 기기에서 접속 중입니다';err.style.display='block';showLoading(false);return;
+        }
+        await db.collection(COL_SES).doc(input).set({deviceId:devId,loginTime:new Date().toISOString()});
+      }
+      window.currentUser={id:input,role:'member'};
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('memberScreen').style.display='flex';
+      loadFromStorage(); drawBoard();
+      startSignalListener(); startConfigListener();
+    } else {
+      err.textContent='등록되지 않은 아이디입니다';err.style.display='block';
+    }
+  }catch(e){err.textContent='오류: '+e.message;err.style.display='block';}
+  showLoading(false);
+};
+document.getElementById('loginInput').addEventListener('keydown',function(e){if(e.key==='Enter')window.login();});
+</script>
+</body>
+</html>
