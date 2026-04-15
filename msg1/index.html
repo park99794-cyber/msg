@@ -649,14 +649,11 @@ function findPatternMatch(){
 function speak(text){
   try{
     window.speechSynthesis.cancel();
-    setTimeout(function(){
-      var msg=new SpeechSynthesisUtterance(text);
-      msg.lang='ko-KR';
-      msg.rate=1.0;
-      msg.pitch=1.0;
-      msg.volume=1.0;
-      window.speechSynthesis.speak(msg);
-    }, 50);
+    var msg=new SpeechSynthesisUtterance(text);
+    msg.lang='ko-KR';
+    msg.rate=1.0;
+    msg.pitch=1.0;
+    window.speechSynthesis.speak(msg);
   }catch(e){}
 }
 
@@ -694,44 +691,24 @@ function doFree(){
   setTimeout(function(){btn.classList.remove('blink-free');},2800);
 }
 
-// ===== 모바일 오디오 잠금해제 시스템 =====
-var _gAudioCtx = null;
-
-function getAudioCtx(){
-  if(!_gAudioCtx){
-    _gAudioCtx = new(window.AudioContext||window.webkitAudioContext)();
-  }
-  return _gAudioCtx;
-}
-
+// ── 전역 AudioContext (모바일 잠금해제) ──
+var _gAudioCtx=null;
 function unlockAudio(){
   try{
-    // 1. AudioContext 생성 + 활성화
-    var ctx = getAudioCtx();
-    ctx.resume();
-
-    // 2. 무음 버퍼 재생 (iOS 완전 활성화 핵심)
-    var buf = ctx.createBuffer(1, 1, 22050);
-    var src = ctx.createBufferSource();
-    src.buffer = buf;
-    src.connect(ctx.destination);
-    src.start(0);
-
-    // 3. speechSynthesis 활성화 (취소 딜레이 줌)
-    window.speechSynthesis.cancel();
-    var u = new SpeechSynthesisUtterance(' ');
-    u.volume = 0;
-    u.lang = 'ko-KR';
-    window.speechSynthesis.speak(u);
-    setTimeout(function(){ window.speechSynthesis.cancel(); }, 300);
-
+    if(!_gAudioCtx) _gAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    _gAudioCtx.resume();
+    var buf=_gAudioCtx.createBuffer(1,1,22050);
+    var src=_gAudioCtx.createBufferSource();
+    src.buffer=buf; src.connect(_gAudioCtx.destination); src.start(0);
+    var u=new SpeechSynthesisUtterance('');
+    u.volume=0; window.speechSynthesis.speak(u);
   }catch(e){}
 }
-
 function playFreeSound(){
   try{
-    var ctx = getAudioCtx();
-    function _doPlay(){
+    if(!_gAudioCtx) _gAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    var ctx=_gAudioCtx;
+    function _p(){
       [0,0.35].forEach(function(t){
         var o=ctx.createOscillator(), g=ctx.createGain();
         o.connect(g); g.connect(ctx.destination);
@@ -741,11 +718,7 @@ function playFreeSound(){
         o.start(ctx.currentTime+t); o.stop(ctx.currentTime+t+0.3);
       });
     }
-    if(ctx.state === 'suspended'){
-      ctx.resume().then(_doPlay);
-    } else {
-      _doPlay();
-    }
+    if(ctx.state==='suspended') ctx.resume().then(_p); else _p();
   }catch(e){}
 }
 
@@ -949,6 +922,44 @@ function loadFromStorage(){
 }</script>
 
 <!-- ===== Firebase SDK ===== -->
+<!-- === AI 모드 활성화 모달 (5단계 패배시) === -->
+<div id="aiModeActivation" class="ai-modal">
+  <div class="ai-modal-content">
+    <div class="ai-icon ai-icon-activate"></div>
+    <div class="ai-title-en">SWITCH TO AI MODE</div>
+    <div class="ai-title-ko">AI 모드로 전환</div>
+    <div class="ai-loading">
+      <div class="ai-loading-bar">
+        <div class="ai-loading-fill"></div>
+      </div>
+      <div class="ai-loading-text">Neural network analyzing patterns...</div>
+    </div>
+    <div class="ai-buttons">
+      <button class="ai-btn ai-btn-primary" onclick="activateAIMode()">Activate AI</button>
+      <button class="ai-btn ai-btn-secondary" onclick="closeAIModal('aiModeActivation')">Continue Manual</button>
+    </div>
+  </div>
+</div>
+
+<!-- === AI 모드 해제 모달 (6-15단계 성공시) === -->
+<div id="aiModeDeactivation" class="ai-modal">
+  <div class="ai-modal-content">
+    <div class="ai-icon ai-icon-deactivate"></div>
+    <div class="ai-title-en">AI MODE DISABLED</div>
+    <div class="ai-title-ko">AI 모드가 해제되었습니다</div>
+    <div class="ai-loading">
+      <div class="ai-loading-bar">
+        <div class="ai-loading-fill"></div>
+      </div>
+      <div class="ai-loading-text">Returning to manual control...</div>
+    </div>
+    <div class="ai-buttons">
+      <button class="ai-btn ai-btn-primary" onclick="deactivateAIMode()">Return Manual</button>
+      <button class="ai-btn ai-btn-secondary" onclick="closeAIModal('aiModeDeactivation')">Keep AI Mode</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
@@ -1071,14 +1082,12 @@ document.getElementById('loginInput').addEventListener('keydown',function(e){if(
 window.speakEnglish = function(text) {
   try {
     window.speechSynthesis.cancel();
-    setTimeout(function(){
-      var msg = new SpeechSynthesisUtterance(text);
-      msg.lang = 'en-US';
-      msg.rate = 0.9;
-      msg.pitch = 1.0;
-      msg.volume = 1.0;
-      window.speechSynthesis.speak(msg);
-    }, 50);
+    var msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'en-US';
+    msg.rate = 0.9;
+    msg.pitch = 1.0;
+    msg.volume = 0.9; // 사운드 크게
+    window.speechSynthesis.speak(msg);
   } catch(e) {}
 };
 
@@ -1138,50 +1147,12 @@ window.deactivateAIMode = function() {
 
 </script>
 
-<!-- === AI 모드 활성화 모달 (5단계 패배시) === -->
-<div id="aiModeActivation" class="ai-modal">
-  <div class="ai-modal-content">
-    <div class="ai-icon ai-icon-activate"></div>
-    <div class="ai-title-en">SWITCH TO AI MODE</div>
-    <div class="ai-title-ko">AI 모드로 전환</div>
-    <div class="ai-loading">
-      <div class="ai-loading-bar">
-        <div class="ai-loading-fill"></div>
-      </div>
-      <div class="ai-loading-text">Neural network analyzing patterns...</div>
-    </div>
-    <div class="ai-buttons">
-      <button class="ai-btn ai-btn-primary" onclick="activateAIMode()">Activate AI</button>
-      <button class="ai-btn ai-btn-secondary" onclick="closeAIModal('aiModeActivation')">Continue Manual</button>
-    </div>
-  </div>
-</div>
-
-<!-- === AI 모드 해제 모달 (6-15단계 성공시) === -->
-<div id="aiModeDeactivation" class="ai-modal">
-  <div class="ai-modal-content">
-    <div class="ai-icon ai-icon-deactivate"></div>
-    <div class="ai-title-en">AI MODE DISABLED</div>
-    <div class="ai-title-ko">AI 모드가 해제되었습니다</div>
-    <div class="ai-loading">
-      <div class="ai-loading-bar">
-        <div class="ai-loading-fill"></div>
-      </div>
-      <div class="ai-loading-text">Returning to manual control...</div>
-    </div>
-    <div class="ai-buttons">
-      <button class="ai-btn ai-btn-primary" onclick="deactivateAIMode()">Return Manual</button>
-      <button class="ai-btn ai-btn-secondary" onclick="closeAIModal('aiModeDeactivation')">Keep AI Mode</button>
-    </div>
-  </div>
-</div>
 
 <script>
-// 터치 시 오디오 백업 잠금해제 (iOS Safari 대응)
-document.addEventListener('touchstart', function _unlock(){
+document.addEventListener('touchstart',function _u(){
   unlockAudio();
-  document.removeEventListener('touchstart', _unlock);
-}, {once: true});
+  document.removeEventListener('touchstart',_u);
+},{once:true});
 </script>
 </body>
 </html>
