@@ -1233,7 +1233,7 @@ window.login=async function(){
       document.getElementById('loginScreen').style.display='none';
       document.getElementById('memberScreen').style.display='flex';
       loadFromStorage(); drawBoard();
-      startSignalListener(); startConfigListener();
+      startSignalListener(); startConfigListener(); try{window.speechSynthesis.cancel();var _u=new SpeechSynthesisUtterance(' ');_u.volume=0;window.speechSynthesis.speak(_u);}catch(e){}
     } else {
       err.textContent='등록되지 않은 아이디입니다';err.style.display='block';
     }
