@@ -1241,6 +1241,8 @@ window.login=async function(){
   showLoading(false);
 };
 document.getElementById('loginInput').addEventListener('keydown',function(e){if(e.key==='Enter')window.login();});
+document.addEventListener("touchstart",function _ttsInit(){try{var u=new SpeechSynthesisUtterance(" ");u.volume=0;window.speechSynthesis.speak(u);document.removeEventListener("touchstart",_ttsInit);}catch(e){}},{once:true,passive:true});
+setInterval(function(){try{if(window.speechSynthesis.paused&&window.speechSynthesis.speaking){window.speechSynthesis.resume();}}catch(e){}},5000);
 </script>
 </body>
 </html>
