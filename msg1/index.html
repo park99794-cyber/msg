@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>MBBC WORLD v2026-bac1</title>
+<title>MBBC WORLD v2026-0407</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Malgun Gothic',sans-serif; }
 body { background:#000; min-height:100vh; }
@@ -100,7 +97,7 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
 .p2-wrap {
   display:flex; gap:8px;
   height:calc(100vh - 16px);
-  min-width:1100px;
+  min-width:1000px;
   align-items:stretch;
 }
 
@@ -180,19 +177,6 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
 }
 .p2-ba-inp::-webkit-outer-spin-button,.p2-ba-inp::-webkit-inner-spin-button { -webkit-appearance:none; }
 .p2-ba-inp:focus { outline:none; border-color:#3b82f6; }
-
-/* 행 토글 버튼 */
-.row-toggle {
-  width:18px; height:18px; border-radius:50%;
-  background:#1a2535; border:2px solid #3a4555;
-  cursor:pointer; flex-shrink:0;
-  transition:all 0.15s; margin-right:3px;
-}
-.row-toggle.active {
-  background:radial-gradient(circle at 35% 35%,#ff4444,#cc0000);
-  border-color:#ff4444;
-  box-shadow:0 0 8px rgba(255,68,68,0.8);
-}
 
 /* 전체 확인 버튼 */
 .p2-confirm-all {
@@ -323,124 +307,6 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
 .blink-free { animation:blinkFree 0.5s 5; }
 .btn-logout { width:140px; height:40px; background:linear-gradient(145deg,#333,#222); border:1px solid #555; border-radius:10px; color:#aaa; font-size:14px; font-weight:700; cursor:pointer; letter-spacing:1px; }
 #patternStatus { display:none; }
-
-/* === AI 모드 모달 스타일 === */
-.ai-modal {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px);
-  display: none; align-items: center; justify-content: center;
-  z-index: 9999; animation: modalFadeIn 0.4s ease;
-}
-
-.ai-modal-content {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-  border-radius: 20px; padding: 40px; text-align: center;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 
-              0 0 0 1px rgba(148, 163, 184, 0.2),
-              inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  width: 420px; max-width: 90vw;
-  position: relative; overflow: hidden;
-  animation: modalSlideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.ai-modal-content::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
-  animation: shimmer 2s infinite;
-}
-
-@keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes modalSlideUp { 
-  from { transform: translateY(50px) scale(0.9); opacity: 0; } 
-  to { transform: translateY(0) scale(1); opacity: 1; } 
-}
-@keyframes shimmer {
-  0%, 100% { transform: translateX(-100%); }
-  50% { transform: translateX(100%); }
-}
-
-.ai-icon {
-  width: 120px; height: 80px; margin: 0 auto 20px;
-  background-repeat: no-repeat; background-position: center; background-size: contain;
-  animation: aiIconBlink 0.4s 5; /* 깜빡이기 5번 */
-}
-
-.ai-icon-activate {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCAzMDAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGU+U3dpdGNoIHRvIEFJIE1vZGU8L3RpdGxlPgogIDxkZXNjPkZ1dHVyaXN0aWMgaW50ZXJmYWNlIHNob3dpbmcgQUkgbW9kZSBhY3RpdmF0aW9uIHdpdGggZ2xvd2luZyBibHVlIG5ldXJhbCBuZXR3b3JrIGRlc2lnbjwvZGVzYz4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmdHcmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMwZjE3MmEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMWUyOTNiIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjMwMCIgZmlsbD0idXJsKCNiZ0dyYWRpZW50KSIgcng9IjE2Ii8+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMTUwIiByPSIzNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjM2I4MmY2IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNiIvPgogIDx0ZXh0IHg9IjM0MCIgeT0iMTMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjM2I4MmY2IiBmb250LWZhbWlseT0iJ09yYml0cm9uJywgbW9ub3NwYWNlIj5TV0lUQ0ggVE8gQUkgTU9ERTwvdGV4dD4KPC9zdmc+');
-}
-
-.ai-icon-deactivate {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgdmlld0JveD0iMCAwIDY4MCAzMDAiIHJvbGU9ImltZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8dGl0bGU+QUkgTW9kZSBEaXNhYmxlZDwvdGl0bGU+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnR3JhZGllbnQyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzFjMTkxNyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMyOTI1MjQiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI2ODAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2JnR3JhZGllbnQyKSIgcng9IjE2Ii8+CiAgPGNpcmNsZSBjeD0iMzQwIiBjeT0iMTUwIiByPSIzNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZjk3MzE2IiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuMyIvPgogIDx0ZXh0IHg9IjM0MCIgeT0iMTMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZjk3MzE2IiBmb250LWZhbWlseT0iJ09yYml0cm9uJywgbW9ub3NwYWNlIiBvcGFjaXR5PSIwLjgiPkFJIE1PREUgRElTQUJMRUQ8L3RleHQ+Cjwvc3ZnPg==');
-}
-
-@keyframes aiIconBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-.ai-title-en {
-  font-family: 'Orbitron', monospace;
-  font-size: 28px; font-weight: 700; color: #e2e8f0;
-  margin-bottom: 8px; letter-spacing: 1px;
-  text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-}
-
-.ai-title-ko {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 18px; font-weight: 500; color: #94a3b8;
-  margin-bottom: 30px; letter-spacing: 0.5px;
-}
-
-.ai-loading {
-  display: none; margin: 20px 0;
-}
-
-.ai-loading-bar {
-  width: 100%; height: 4px; background: #334155; border-radius: 2px;
-  overflow: hidden; margin-bottom: 10px;
-}
-
-.ai-loading-fill {
-  height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-  width: 0%; animation: loadingProgress 3s ease-in-out;
-}
-
-@keyframes loadingProgress {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-
-.ai-loading-text {
-  font-size: 14px; color: #64748b; font-family: monospace;
-}
-
-.ai-buttons {
-  display: flex; gap: 15px; justify-content: center;
-}
-
-.ai-btn {
-  padding: 12px 24px; border-radius: 12px; font-weight: 600;
-  border: none; cursor: pointer; transition: all 0.3s ease;
-  font-size: 16px; position: relative; overflow: hidden;
-}
-
-.ai-btn-primary {
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-  color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-}
-
-.ai-btn-primary:hover {
-  transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-}
-
-.ai-btn-secondary {
-  background: rgba(148, 163, 184, 0.1); color: #e2e8f0;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-}
-
-.ai-btn-secondary:hover {
-  background: rgba(148, 163, 184, 0.2); transform: translateY(-1px);
-}
 </style>
 </head>
 <body>
@@ -456,10 +322,235 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
   <div class="login-box">
     <div class="login-label">아이디 입력</div>
     <input type="text" id="loginInput" class="login-input" placeholder="MBBC-XXXXX">
-    <button onclick="unlockAudio();login()" class="login-btn">로그인</button>
+    <button onclick="login()" class="login-btn">로그인</button>
     <div class="login-error" id="loginError"></div>
   </div>
 </div>
+
+<!-- ===== A 관리자 화면 ===== -->
+<div id="adminScreen">
+
+  <!-- Panel 1 -->
+  <div id="adminPanel1">
+    <div class="p1-logo">MBBC WORLD</div>
+    <div class="p1-mode-row">
+      <span class="p1-badge">● SENDER MODE</span>
+      <button class="p1-logout" onclick="adminLogout()">로그아웃</button>
+    </div>
+    <div class="p1-section">
+      <div class="p1-section-title">회원 ID 관리</div>
+      <div class="p1-pagination" id="pagination"></div>
+      <input type="text" class="p1-id-input" id="idInput" placeholder="특정 ID 입력 (비우면 랜덤 생성)">
+      <button class="p1-btn-create" onclick="createId()">새 ID 생성</button>
+      <div class="p1-id-list" id="idList"><div class="p1-no-member">등록된 회원이 없습니다</div></div>
+    </div>
+    <div class="p1-section">
+      <div class="p1-section-title">PC 접근 제어</div>
+      <div class="p1-control-row">
+        <span class="p1-control-label">컴퓨터용 동영상 재생</span>
+        <label class="p1-toggle"><input type="checkbox" id="pcToggle" checked onchange="togglePC()"><span class="p1-slider"></span></label>
+      </div>
+      <div class="p1-status" id="pcStatus">✓ 현재 컴퓨터에서 동영상 재생이 가능합니다</div>
+    </div>
+    <div class="p1-spacer"></div>
+    <button class="p1-bet-btn" onclick="showPanel2()">베팅 관련 설정</button>
+  </div>
+
+  <!-- Panel 2 -->
+  <div id="adminPanel2">
+    <div class="p2-wrap">
+
+      <!-- 슬롯 (2×5=10개) -->
+      <div class="p2-slot">
+        <div class="p2-slot-grid">
+          <div class="p2-slot-row"><div class="p2-dot" id="slot0"></div><div class="p2-dot" id="slot1"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot2"></div><div class="p2-dot" id="slot3"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot4"></div><div class="p2-dot" id="slot5"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot6"></div><div class="p2-dot" id="slot7"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot8"></div><div class="p2-dot" id="slot9"></div></div>
+        </div>
+        <div class="p2-slot-spacer"></div>
+        <button class="p2-reset-btn" onclick="doReset()">리 셋</button>
+        <button class="p2-logout-btn" onclick="adminLogout()">로그아웃</button>
+        <div class="p2-prev" onclick="prevStep()" style="margin-top:6px;">
+          <span style="font-size:18px;">←</span><span>전단계</span>
+        </div>
+      </div>
+
+      <!-- 베팅금설정 (10행 × 4열, 세트별) -->
+      <div class="p2-bet">
+        <div class="p2-col-title">베팅금설정</div>
+        <div class="p2-ba-hdr-row">
+          <span class="p2-ba-hdr-num"></span>
+          <span class="p2-ba-hdr-lbl">1단</span>
+          <span class="p2-ba-hdr-lbl">2단</span>
+          <span class="p2-ba-hdr-lbl">3단</span>
+          <span class="p2-ba-hdr-lbl">4단</span>
+          <span class="p2-ba-hdr-lbl">5단</span>
+          <span class="p2-ba-hdr-lbl">6단</span>
+        </div>
+        <div id="baGrid"></div>
+        <button style="width:100%;padding:10px;margin-top:6px;background:linear-gradient(135deg,#334155,#1e293b);color:#fff;border:2px solid #4a5568;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:2px;flex-shrink:0;" onclick="saveBaOnly()">확 인</button>
+        <button style="width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:2px solid #a78bfa;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" onclick="showPanel3()">설정 2 바로가기</button>
+      </div>
+
+      <!-- 입력그림 + 베팅포지션 -->
+      <div class="p2-right">
+
+        <!-- 입력그림 (10×8) -->
+        <div class="p2-box">
+          <div class="p2-box-title">입력 그림</div>
+          <div class="p2-ig-wrap">
+            <div class="p2-ig-rows" id="igRows"></div>
+          </div>
+        </div>
+
+        <!-- 베팅포지션 (10×4, 1~5/6~10) -->
+        <div class="p2-box">
+          <div class="p2-box-title">베팅포지션</div>
+          <div class="p2-bp-wrap">
+            <div class="p2-bp-halves">
+              <div class="p2-bp-half" id="bpLeft"></div>
+              <div class="p2-bp-half" id="bpRight"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 전체 확인 -->
+        <button class="p2-confirm-all" onclick="saveAll()">전체  확인</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 3 (설정2: 11~20번) -->
+  <div id="adminPanel3">
+    <div class="p2-wrap">
+
+      <!-- 슬롯2 (2×5=10개, 11~20) -->
+      <div class="p2-slot">
+        <div class="p2-slot-grid">
+          <div class="p2-slot-row"><div class="p2-dot" id="slot10"></div><div class="p2-dot" id="slot11"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot12"></div><div class="p2-dot" id="slot13"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot14"></div><div class="p2-dot" id="slot15"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot16"></div><div class="p2-dot" id="slot17"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot18"></div><div class="p2-dot" id="slot19"></div></div>
+        </div>
+        <div class="p2-slot-spacer"></div>
+        <button class="p2-reset-btn" onclick="doReset2()">리 셋</button>
+        <button class="p2-logout-btn" onclick="adminLogout()">로그아웃</button>
+      </div>
+
+      <!-- 베팅금설정2 (10행 × 6열) -->
+      <div class="p2-bet">
+        <div class="p2-col-title">베팅금설정</div>
+        <div class="p2-ba-hdr-row">
+          <span class="p2-ba-hdr-num"></span>
+          <span class="p2-ba-hdr-lbl">1단</span>
+          <span class="p2-ba-hdr-lbl">2단</span>
+          <span class="p2-ba-hdr-lbl">3단</span>
+          <span class="p2-ba-hdr-lbl">4단</span>
+          <span class="p2-ba-hdr-lbl">5단</span>
+          <span class="p2-ba-hdr-lbl">6단</span>
+        </div>
+        <div id="baGrid2"></div>
+        <button style="width:100%;padding:10px;margin-top:6px;background:linear-gradient(135deg,#334155,#1e293b);color:#fff;border:2px solid #4a5568;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:2px;flex-shrink:0;" onclick="saveBaOnly2()">확 인</button>
+        <button style="width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:2px solid #a78bfa;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" onclick="showPanel4()">설정 3 바로가기</button>
+        <button style="width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#334155,#1e293b);color:#94a3b8;border:2px solid #4a5568;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" onclick="showPanel2()">← 설정 1 바로가기</button>
+      </div>
+
+      <!-- 입력그림2 + 베팅포지션2 -->
+      <div class="p2-right">
+
+        <!-- 입력그림2 (10×8, 11~20번) -->
+        <div class="p2-box">
+          <div class="p2-box-title">입력 그림 (11~20번)</div>
+          <div class="p2-ig-wrap">
+            <div class="p2-ig-rows" id="igRows2"></div>
+          </div>
+        </div>
+
+        <!-- 베팅포지션2 -->
+        <div class="p2-box">
+          <div class="p2-box-title">베팅포지션 (11~20번)</div>
+          <div class="p2-bp-wrap">
+            <div class="p2-bp-halves">
+              <div class="p2-bp-half" id="bpLeft2"></div>
+              <div class="p2-bp-half" id="bpRight2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 전체 확인2 -->
+        <button class="p2-confirm-all" onclick="saveAll2()">전체  확인</button>
+
+      </div>
+    </div>
+  </div>
+  <!-- Panel 4 (설정3: 21~30번) -->
+  <div id="adminPanel4" style="display:none;">
+    <div class="p2-wrap">
+
+      <!-- 슬롯3 (2×5=10개, 21~30) -->
+      <div class="p2-slot">
+        <div class="p2-slot-grid">
+          <div class="p2-slot-row"><div class="p2-dot" id="slot20"></div><div class="p2-dot" id="slot21"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot22"></div><div class="p2-dot" id="slot23"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot24"></div><div class="p2-dot" id="slot25"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot26"></div><div class="p2-dot" id="slot27"></div></div>
+          <div class="p2-slot-row"><div class="p2-dot" id="slot28"></div><div class="p2-dot" id="slot29"></div></div>
+        </div>
+        <div class="p2-slot-spacer"></div>
+        <button class="p2-reset-btn" onclick="doReset3()">리 셋</button>
+        <button class="p2-logout-btn" onclick="adminLogout()">로그아웃</button>
+      </div>
+
+      <!-- 베팅금설정3 (10행 × 6열) -->
+      <div class="p2-bet">
+        <div class="p2-col-title">베팅금설정</div>
+        <div class="p2-ba-hdr-row">
+          <span class="p2-ba-hdr-num"></span>
+          <span class="p2-ba-hdr-lbl">1단</span>
+          <span class="p2-ba-hdr-lbl">2단</span>
+          <span class="p2-ba-hdr-lbl">3단</span>
+          <span class="p2-ba-hdr-lbl">4단</span>
+          <span class="p2-ba-hdr-lbl">5단</span>
+          <span class="p2-ba-hdr-lbl">6단</span>
+        </div>
+        <div id="baGrid3"></div>
+        <button style="width:100%;padding:10px;margin-top:6px;background:linear-gradient(135deg,#334155,#1e293b);color:#fff;border:2px solid #4a5568;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;letter-spacing:2px;flex-shrink:0;" onclick="saveBaOnly3()">확 인</button>
+        <button style="width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,#334155,#1e293b);color:#94a3b8;border:2px solid #4a5568;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" onclick="showPanel3()">← 설정 2 바로가기</button>
+      </div>
+
+      <!-- 입력그림3 + 베팅포지션3 -->
+      <div class="p2-right">
+
+        <!-- 입력그림3 (10×14, 21~30번) -->
+        <div class="p2-box">
+          <div class="p2-box-title">입력 그림 (21~30번)</div>
+          <div class="p2-ig-wrap">
+            <div class="p2-ig-rows" id="igRows3"></div>
+          </div>
+        </div>
+
+        <!-- 베팅포지션3 -->
+        <div class="p2-box">
+          <div class="p2-box-title">베팅포지션 (21~30번)</div>
+          <div class="p2-bp-wrap">
+            <div class="p2-bp-halves">
+              <div class="p2-bp-half" id="bpLeft3"></div>
+              <div class="p2-bp-half" id="bpRight3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 전체 확인3 -->
+        <button class="p2-confirm-all" onclick="saveAll3()">전체  확인</button>
+
+      </div>
+    </div>
+  </div>
+</div><!-- end adminScreen -->
 
 <!-- ===== B 회원 화면 ===== -->
 <div id="memberScreen">
@@ -608,32 +699,15 @@ function drawBoard() {
 // 상태: 'free' | 'betting'
 var bState='free', bActiveSet=-1, bBetStep=0;
 
-// ★ 핵심 변수: 현재 단계 (1부터 시작)
-var currentStage = 1;
-
-var activeRows = new Array(30).fill(false); // 빨간불 행
-
-function isRowActive(setIdx){
-  if(currentStage <= 5) return true; // 1~5단계: 모두 허용
-  return activeRows[setIdx];    // 6단계+: 빨간불 행만
-}
-
-// 현재 단계+스텝의 베팅금액
-function getStageAmt(step){
-  var stAmts = window.betAmountsPerStage[currentStage - 1] || [];
-  return stAmts[step] || 0;
-}
-
-// 로드된 Firebase 설정 (30개 확장)
-window.igPatterns  = new Array(30).fill(null); // 입력그림 패턴
-window.bpPositions = new Array(30).fill(null); // 베팅포지션 방향
-window.betAmountsPerStage = new Array(30).fill([]); // 단계별 베팅금 [stage][step]
+// 로드된 Firebase 설정
+window.igPatterns  = new Array(10).fill(null); // 입력그림: 10개 패턴
+window.bpPositions = new Array(10).fill(null); // 베팅포지션: 10개 방향배열
+window.betAmounts  = [0,0,0,0];                // 베팅금액 4단계
 
 // 패턴 매칭: results 끝이 N번 패턴과 일치하는 세트 인덱스 반환
 function findPatternMatch(){
   var pats=window.igPatterns||[];
   for(var i=0;i<pats.length;i++){
-    if(!isRowActive(i)) continue; // 6단계+: 비활성 행 스킵
     var p=pats[i];
     if(!p||p.length===0)continue;
     if(results.length<p.length)continue;
@@ -691,38 +765,21 @@ function doFree(){
   setTimeout(function(){btn.classList.remove('blink-free');},2800);
 }
 
-// ── 전역 AudioContext (모바일 잠금해제) ──
-var _gAudioCtx=null;
-function unlockAudio(){
-  try{
-    if(!_gAudioCtx) _gAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    _gAudioCtx.resume();
-    var buf=_gAudioCtx.createBuffer(1,1,22050);
-    var src=_gAudioCtx.createBufferSource();
-    src.buffer=buf; src.connect(_gAudioCtx.destination); src.start(0);
-    var u=new SpeechSynthesisUtterance('');
-    u.volume=0; window.speechSynthesis.speak(u);
-  }catch(e){}
-}
 function playFreeSound(){
   try{
-    if(!_gAudioCtx) _gAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    var ctx=_gAudioCtx;
-    function _p(){
-      [0,0.35].forEach(function(t){
-        var o=ctx.createOscillator(), g=ctx.createGain();
-        o.connect(g); g.connect(ctx.destination);
-        o.frequency.value=880; o.type='sine';
-        g.gain.setValueAtTime(0.25,ctx.currentTime+t);
-        g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+0.28);
-        o.start(ctx.currentTime+t); o.stop(ctx.currentTime+t+0.3);
-      });
-    }
-    if(ctx.state==='suspended') ctx.resume().then(_p); else _p();
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [0,0.35].forEach(function(t){
+      var o=ctx.createOscillator(), g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value=880; o.type='sine';
+      g.gain.setValueAtTime(0.25,ctx.currentTime+t);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t+0.28);
+      o.start(ctx.currentTime+t); o.stop(ctx.currentTime+t+0.3);
+    });
   }catch(e){}
 }
 
-// 결과 입력 ── 핵심 로직 ──
+// 결과 입력
 function inputResult(val){
   results.push(val);
   drawBoard(); saveToStorage();
@@ -731,10 +788,16 @@ function inputResult(val){
   var btn=val==='B'?document.querySelector('.btn-b'):document.querySelector('.btn-p');
   if(btn){btn.style.transform='scale(0.9)';setTimeout(function(){btn.style.transform='';},150);}
 
-  var pos=window.bpPositions||[];
   var pats=window.igPatterns||[];
+  var pos=window.bpPositions||[];
   var hasAny=pats.some(function(p){return p&&p.length>0;});
   if(!hasAny){return;}
+
+  // 세트별 베팅금 사용
+  function getSetAmts(setIdx){
+    var perSet=window.betAmountsPerSet||[];
+    return perSet[setIdx]||[0,0,0,0,0,0];
+  }
 
   if(bState==='betting'){
     var curPos=pos[bActiveSet];
@@ -742,64 +805,35 @@ function inputResult(val){
       bState='free'; bActiveSet=-1; bBetStep=0;
       showSignal('FREE',0); return;
     }
-
     var expected=curPos[bBetStep];
-
     if(val===expected){
-      // ★ 맞음 → 다음 단(step)으로
       bBetStep++;
-
-      if(bBetStep >= curPos.length){
-        // ★★ 모든 베팅 성공 → 1단계 복귀
-        var prevStage = currentStage;
-        currentStage = 1;
-        
-        // === AI 모드 해제 (6~15단계에서 성공시) ===
-        if(prevStage >= 6 && prevStage <= 15) {
-          setTimeout(() => { showAIModeDeactivation(); }, 800);
-        }
-        
-        bState='free'; bActiveSet=-1; bBetStep=0;
-        // 새 패턴 탐색 (전체 행 활성 상태로)
-        var m=findPatternMatch();
-        if(m>=0 && pos[m] && pos[m].length>0){
-          bActiveSet=m; bBetStep=0; bState='betting';
-          showSignal(pos[m][0], getStageAmt(0));
-        } else {
-          showSignal('FREE',0);
-        }
+      if(bBetStep<curPos.length){
+        var amts=getSetAmts(bActiveSet);
+        showSignal(curPos[bBetStep], amts[bBetStep]||0);
       } else {
-        // 시퀀스 계속 (같은 단계, 다음 단)
-        showSignal(curPos[bBetStep], getStageAmt(bBetStep));
+        // 완료 → FREE (무한반복 방지)
+        bState='free'; bActiveSet=-1; bBetStep=0;
+        showSignal('FREE',0);
       }
-
     } else {
-      // ★ 틀림 → 다음 단계로 (최대 30단계)
-      var prevStage = currentStage;
-      currentStage = Math.min(currentStage + 1, 30);
-      
-      // === AI 모드 활성화 (5단계 → 6단계로 올라갈 때) ===
-      if(prevStage === 5 && currentStage === 6) {
-        setTimeout(() => { showAIModeActivation(); }, 1000);
-      }
-      
+      // 불일치 → 즉시 새 패턴 체크, 없으면 FREE
       bState='free'; bActiveSet=-1; bBetStep=0;
-      // 새 패턴 탐색 (6단계+는 빨간불 행만)
-      var m=findPatternMatch();
-      if(m>=0 && pos[m] && pos[m].length>0){
-        bActiveSet=m; bBetStep=0; bState='betting';
-        showSignal(pos[m][0], getStageAmt(0));
+      var match2=findPatternMatch();
+      if(match2>=0&&pos[match2]&&pos[match2].length>0){
+        bActiveSet=match2; bBetStep=0; bState='betting';
+        var amts2=getSetAmts(match2);
+        showSignal(pos[match2][0], amts2[0]||0);
       } else {
         showSignal('FREE',0);
       }
     }
-
   } else {
-    // free 상태 → 패턴 탐색
-    var m=findPatternMatch();
-    if(m>=0 && pos[m] && pos[m].length>0){
-      bActiveSet=m; bBetStep=0; bState='betting';
-      showSignal(pos[m][0], getStageAmt(0));
+    var match=findPatternMatch();
+    if(match>=0 && pos[match] && pos[match].length>0){
+      bActiveSet=match; bBetStep=0; bState='betting';
+      var amts=getSetAmts(match);
+      showSignal(pos[match][0], amts[0]||0);
     } else {
       showSignal('FREE',0);
     }
@@ -810,7 +844,7 @@ function inputResult(val){
 function undoLast(){
   if(results.length===0)return;
   results.pop();
-  bState='free'; bActiveSet=-1; bBetStep=0; currentStage=1;
+  bState='free'; bActiveSet=-1; bBetStep=0;
   drawBoard(); saveToStorage();
 }
 
@@ -818,7 +852,7 @@ function undoLast(){
 function resetBoard(){
   if(confirm('새 슈를 시작하시겠습니까?\n보드판과 금액이 초기화됩니다.')){
     results=[];
-    bState='free'; bActiveSet=-1; bBetStep=0; currentStage=1;
+    bState='free'; bActiveSet=-1; bBetStep=0;
     drawBoard(); saveToStorage();
     var rc=document.getElementById('circleRed');
     var bc=document.getElementById('circleBlue');
@@ -840,7 +874,7 @@ function resetBoard(){
 function doLogout(){
   if(confirm('로그아웃 하시겠습니까?')){
     results=[]; drawBoard();
-    bState='free'; bActiveSet=-1; bBetStep=0; currentStage=1;
+    bState='free'; bActiveSet=-1; bBetStep=0;
     document.getElementById('memberScreen').style.display='none';
     document.getElementById('loginScreen').style.display='flex';
     document.getElementById('loginInput').value='';
@@ -911,55 +945,840 @@ function calcTrackerResult(inputVal){
 
 // 로컬 저장
 function saveToStorage(){
-  localStorage.setItem('mbbc_bac1_res',JSON.stringify(results));
-  localStorage.setItem('mbbc_bac1_stage',JSON.stringify({currentStage:currentStage}));
+  localStorage.setItem('mbbc_bac_res',JSON.stringify(results));
 }
 function loadFromStorage(){
-  var r=localStorage.getItem('mbbc_bac1_res');
+  var r=localStorage.getItem('mbbc_bac_res');
   if(r){results=JSON.parse(r);drawBoard();}
-  var s=localStorage.getItem('mbbc_bac1_stage');
-  if(s){try{var d=JSON.parse(s);currentStage=d.currentStage||1;}catch(e){}}
 }</script>
 
+<!-- ===== A 화면 스크립트 ===== -->
+<script>
+// ── 패널 전환 ──
+function showPanel2(){
+  document.getElementById('adminPanel1').style.display='none';
+  document.getElementById('adminPanel3').style.display='none';
+  document.getElementById('adminPanel4').style.display='none';
+  document.getElementById('adminPanel2').style.display='block';
+  setTimeout(function(){initIgGrid();initBpGrid();initBaGrid();loadAdminSettings();},80);
+}
+function showPanel1(){
+  document.getElementById('adminPanel2').style.display='none';
+  document.getElementById('adminPanel3').style.display='none';
+  document.getElementById('adminPanel4').style.display='none';
+  document.getElementById('adminPanel1').style.display='flex';
+}
+function showPanel3(){
+  document.getElementById('adminPanel2').style.display='none';
+  document.getElementById('adminPanel4').style.display='none';
+  document.getElementById('adminPanel3').style.display='block';
+  setTimeout(function(){initIgGrid2();initBpGrid2();initBaGrid2();loadAdminSettings2();},80);
+}
+function showPanel4(){
+  document.getElementById('adminPanel2').style.display='none';
+  document.getElementById('adminPanel3').style.display='none';
+  document.getElementById('adminPanel4').style.display='block';
+  setTimeout(function(){initIgGrid3();initBpGrid3();initBaGrid3();loadAdminSettings3();},80);
+}
+
+// ── 입력그림 그리드 (10×8) ──
+var IG_R=10, IG_C=14;
+var igGrid=[];
+for(var r=0;r<IG_R;r++) igGrid.push(new Array(IG_C).fill(null));
+
+function initIgGrid(){
+  var container=document.getElementById('igRows');
+  if(!container)return;
+  container.innerHTML='';
+  for(var r=0;r<IG_R;r++){
+    var row=document.createElement('div');
+    row.className='p2-ig-row';
+    var num=document.createElement('span');
+    num.className='p2-row-num';
+    num.textContent=r+1;
+    row.appendChild(num);
+    for(var c=0;c<IG_C;c++){
+      var cell=document.createElement('div');
+      cell.className='p2-ig-cell';
+      cell.id='ig-'+r+'-'+c;
+      cell.textContent='-';
+      cell.onclick=(function(rr,cc){return function(){toggleIgCell(rr,cc);};})(r,c);
+      row.appendChild(cell);
+    }
+    container.appendChild(row);
+  }
+}
+
+function toggleIgCell(r,c){
+  var v=igGrid[r][c];
+  igGrid[r][c]=(v===null)?'P':(v==='P')?'B':null;
+  renderIgGrid();
+}
+function renderIgGrid(){
+  for(var r=0;r<IG_R;r++)for(var c=0;c<IG_C;c++){
+    var el=document.getElementById('ig-'+r+'-'+c);
+    if(!el)continue;
+    var v=igGrid[r][c];
+    el.className='p2-ig-cell';
+    if(v==='P'){el.classList.add('cp');el.textContent='P';}
+    else if(v==='B'){el.classList.add('cb');el.textContent='B';}
+    else{el.textContent='-';}
+  }
+}
+
+// ── 베팅금설정 그리드 (10행 × 4열, 세트별) ──
+var BA_R=10, BA_C=6;
+var baGrid=[];
+for(var r=0;r<BA_R;r++) baGrid.push([0,0,0,0,0,0]);
+
+function initBaGrid(){
+  var container=document.getElementById('baGrid');
+  if(!container)return;
+  container.innerHTML='';
+  for(var r=0;r<BA_R;r++){
+    var row=document.createElement('div');
+    row.className='p2-ba-row';
+    var num=document.createElement('span');
+    num.className='p2-ba-num';
+    num.textContent=r+1;
+    row.appendChild(num);
+    for(var c=0;c<BA_C;c++){
+      var inp=document.createElement('input');
+      inp.type='number';
+      inp.className='p2-ba-inp';
+      inp.id='ba-'+r+'-'+c;
+      inp.placeholder='-';
+      if(baGrid[r][c]) inp.value=baGrid[r][c];
+      inp.addEventListener('input',(function(rr,cc){return function(){baGrid[rr][cc]=parseInt(this.value)||0;};})(r,c));
+      row.appendChild(inp);
+    }
+    container.appendChild(row);
+  }
+}
+
+function getBaArr(){
+  var arr=[];
+  for(var r=0;r<BA_R;r++){
+    var vals=[];
+    for(var c=0;c<BA_C;c++){
+      var el=document.getElementById('ba-'+r+'-'+c);
+      vals.push(el?parseInt(el.value)||0:baGrid[r][c]||0);
+    }
+    arr.push(vals.join('-'));
+  }
+  return arr;
+}
+
+// 베팅금만 독립 저장 (입력그림/베팅포지션 건드리지 않음)
+function saveBaOnly(){
+  var baArr=getBaArr();
+  db.collection(COL_CFG).doc('settings').update({ba:baArr, savedAt:Date.now()})
+  .then(function(){
+    var cnt=baArr.filter(function(s){return s.replace(/0|-/g,'').length>0;}).length;
+    alert('✅ 베팅금 저장 완료!\n세트 '+cnt+'개 금액 저장\n\n입력그림/베팅포지션은 그대로 유지됩니다.');
+  }).catch(function(){
+    // 문서 없을 경우 새로 생성
+    db.collection(COL_CFG).doc('settings').set({
+      ig:new Array(10).fill(''), bp:new Array(10).fill(''), ba:baArr, savedAt:Date.now()
+    }).then(function(){alert('✅ 베팅금 저장 완료!');})
+    .catch(function(e){alert('❌ 오류: '+e.message);});
+  });
+}
+
+
+function saveAll(){
+  // 입력그림 배열
+  var igArr=[];
+  for(var r=0;r<IG_R;r++){
+    var cells=igGrid[r].filter(function(v){return v!==null;});
+    igArr.push(cells.length>0?cells.join('-'):'');
+  }
+  // 베팅포지션 배열
+  var bpArr=[];
+  for(var r=0;r<BP_R;r++){
+    var cells=bpGrid[r].filter(function(v){return v!==null;});
+    bpArr.push(cells.length>0?cells.join('-'):'');
+  }
+  // 베팅금액 (세트별 10×4)
+  var baArr=getBaArr();
+
+  // 슬롯 빨간불
+  for(var i=0;i<10;i++){
+    var dot=document.getElementById('slot'+i);
+    if(!dot)continue;
+    if(igArr[i]&&igArr[i].length>0) dot.classList.add('active');
+    else dot.classList.remove('active');
+  }
+
+  var igHasData=igArr.some(function(s){return s.length>0;});
+
+  if(igHasData){
+    var saveData={ig:igArr, bp:bpArr, ba:baArr, savedAt:Date.now()};
+    db.collection(COL_CFG).doc('settings').set(saveData).then(function(){
+      var cnt=igArr.filter(function(s){return s;}).length;
+      var bpCnt=bpArr.filter(function(s){return s;}).length;
+      alert('✅ 전체 저장 완료!\n\n📋 입력그림: '+cnt+'개\n🎯 베팅포지션: '+bpCnt+'개\n💰 베팅금: 세트별 저장\n\n(A가 종료해도 B는 계속 작동합니다)');
+    }).catch(function(e){alert('❌ 저장 실패: '+e.message);});
+  } else {
+    db.collection(COL_CFG).doc('settings').update({ba:baArr, savedAt:Date.now()})
+    .then(function(){
+      alert('✅ 베팅금 저장 완료!\n⚠ 입력그림/베팅포지션은 기존 설정 유지됩니다.');
+    }).catch(function(){
+      db.collection(COL_CFG).doc('settings').set({ig:new Array(10).fill(''),bp:new Array(10).fill(''),ba:baArr,savedAt:Date.now()})
+      .then(function(){alert('✅ 저장 완료!');}).catch(function(e){alert('❌ 오류: '+e.message);});
+    });
+  }
+}
+
+// 베팅포지션 확인 (내부용 - 직접 호출 없음)
+function saveBpGrid(){
+  var bpArr=[];
+  for(var r=0;r<BP_R;r++){
+    var cells=bpGrid[r].filter(function(v){return v!==null;});
+    bpArr.push(cells.length>0?cells.join('-'):'');
+  }
+  db.collection(COL_CFG).doc('settings').update({bp:bpArr, savedAt:Date.now()}).catch(function(){});
+}
+
+// ── 베팅포지션 그리드 (10×4, 1~5/6~10) ──
+var BP_R=10, BP_C=6;
+var bpGrid=[];
+for(var r=0;r<BP_R;r++) bpGrid.push(new Array(BP_C).fill(null));
+
+function initBpGrid(){
+  var leftEl=document.getElementById('bpLeft');
+  var rightEl=document.getElementById('bpRight');
+  if(!leftEl||!rightEl)return;
+  leftEl.innerHTML=''; rightEl.innerHTML='';
+  for(var r=0;r<BP_R;r++){
+    var row=document.createElement('div');
+    row.className='p2-bp-row';
+    var num=document.createElement('span');
+    num.className='p2-row-num';
+    num.textContent=r+1;
+    row.appendChild(num);
+    for(var c=0;c<BP_C;c++){
+      var cell=document.createElement('div');
+      cell.className='p2-bp-cell';
+      cell.id='bp-'+r+'-'+c;
+      cell.textContent='-';
+      cell.onclick=(function(rr,cc){return function(){toggleBpCell(rr,cc);};})(r,c);
+      row.appendChild(cell);
+    }
+    if(r<5)leftEl.appendChild(row);
+    else rightEl.appendChild(row);
+  }
+}
+
+function toggleBpCell(r,c){
+  var v=bpGrid[r][c];
+  bpGrid[r][c]=(v===null)?'P':(v==='P')?'B':null;
+  renderBpGrid();
+}
+function renderBpGrid(){
+  for(var r=0;r<BP_R;r++)for(var c=0;c<BP_C;c++){
+    var el=document.getElementById('bp-'+r+'-'+c);
+    if(!el)continue;
+    var v=bpGrid[r][c];
+    el.className='p2-bp-cell';
+    if(v==='P'){el.classList.add('cp');el.textContent='P';}
+    else if(v==='B'){el.classList.add('cb');el.textContent='B';}
+    else{el.textContent='-';}
+  }
+}
+
+// A 접속 시 기존 Firebase 설정 불러오기 (화면에 표시)
+function loadAdminSettings(){
+  db.collection(COL_CFG).doc('settings').get().then(function(snap){
+    if(!snap.exists)return;
+    var d=snap.data();
+    // 입력그림 복원
+    var ig=d.ig||[];
+    for(var r=0;r<IG_R;r++){
+      var s=ig[r]||'';
+      var arr=s?s.split('-'):[];
+      for(var c=0;c<IG_C;c++) igGrid[r][c]=(c<arr.length&&arr[c])?arr[c]:null;
+    }
+    renderIgGrid();
+    // 베팅포지션 복원
+    var bp=d.bp||[];
+    for(var r=0;r<BP_R;r++){
+      var s=bp[r]||'';
+      var arr=s?s.split('-'):[];
+      for(var c=0;c<BP_C;c++) bpGrid[r][c]=(c<arr.length&&arr[c])?arr[c]:null;
+    }
+    renderBpGrid();
+    // 베팅금 복원 (세트별)
+    var ba=d.ba||[];
+    for(var r=0;r<BA_R;r++){
+      var s=typeof ba[r]==='string'?ba[r]:'';
+      var arr=s?s.split('-').map(Number):[0,0,0,0];
+      for(var c=0;c<BA_C;c++){
+        baGrid[r][c]=arr[c]||0;
+        var el=document.getElementById('ba-'+r+'-'+c);
+        if(el) el.value=arr[c]||'';
+      }
+    }
+    // 슬롯 복원
+    var igArr=d.ig||[];
+    for(var i=0;i<10;i++){
+      var dot=document.getElementById('slot'+i);
+      if(dot){
+        if(igArr[i]&&igArr[i].length>0) dot.classList.add('active');
+        else dot.classList.remove('active');
+      }
+    }
+  }).catch(function(e){console.log('설정 로드 오류:',e);});
+}
+
+// ==========================================
+// Panel 3 - 설정2 (11~20번)
+// ==========================================
+var IG_R2=10, IG_C2=14;
+var igGrid2=[];
+for(var r=0;r<IG_R2;r++) igGrid2.push(new Array(IG_C2).fill(null));
+
+function initIgGrid2(){
+  var container=document.getElementById('igRows2');
+  if(!container)return;
+  container.innerHTML='';
+  for(var r=0;r<IG_R2;r++){
+    var row=document.createElement('div');
+    row.className='p2-ig-row';
+    var num=document.createElement('span');
+    num.className='p2-row-num';
+    num.textContent=r+11; // 11~20
+    row.appendChild(num);
+    for(var c=0;c<IG_C2;c++){
+      var cell=document.createElement('div');
+      cell.className='p2-ig-cell';
+      cell.id='ig2-'+r+'-'+c;
+      cell.textContent='-';
+      cell.onclick=(function(rr,cc){return function(){toggleIgCell2(rr,cc);};})(r,c);
+      row.appendChild(cell);
+    }
+    container.appendChild(row);
+  }
+}
+
+function toggleIgCell2(r,c){
+  var v=igGrid2[r][c];
+  igGrid2[r][c]=(v===null)?'P':(v==='P')?'B':null;
+  renderIgGrid2();
+}
+function renderIgGrid2(){
+  for(var r=0;r<IG_R2;r++)for(var c=0;c<IG_C2;c++){
+    var el=document.getElementById('ig2-'+r+'-'+c);
+    if(!el)continue;
+    var v=igGrid2[r][c];
+    el.className='p2-ig-cell';
+    if(v==='P'){el.classList.add('cp');el.textContent='P';}
+    else if(v==='B'){el.classList.add('cb');el.textContent='B';}
+    else{el.textContent='-';}
+  }
+}
+
+// 베팅포지션2
+var BP_R2=10, BP_C2=6;
+var bpGrid2=[];
+for(var r=0;r<BP_R2;r++) bpGrid2.push(new Array(BP_C2).fill(null));
+
+function initBpGrid2(){
+  var leftEl=document.getElementById('bpLeft2');
+  var rightEl=document.getElementById('bpRight2');
+  if(!leftEl||!rightEl)return;
+  leftEl.innerHTML=''; rightEl.innerHTML='';
+  for(var r=0;r<BP_R2;r++){
+    var row=document.createElement('div');
+    row.className='p2-bp-row';
+    var num=document.createElement('span');
+    num.className='p2-row-num';
+    num.textContent=r+11; // 11~20
+    row.appendChild(num);
+    for(var c=0;c<BP_C2;c++){
+      var cell=document.createElement('div');
+      cell.className='p2-bp-cell';
+      cell.id='bp2-'+r+'-'+c;
+      cell.textContent='-';
+      cell.onclick=(function(rr,cc){return function(){toggleBpCell2(rr,cc);};})(r,c);
+      row.appendChild(cell);
+    }
+    if(r<5)leftEl.appendChild(row);
+    else rightEl.appendChild(row);
+  }
+}
+
+function toggleBpCell2(r,c){
+  var v=bpGrid2[r][c];
+  bpGrid2[r][c]=(v===null)?'P':(v==='P')?'B':null;
+  renderBpGrid2();
+}
+function renderBpGrid2(){
+  for(var r=0;r<BP_R2;r++)for(var c=0;c<BP_C2;c++){
+    var el=document.getElementById('bp2-'+r+'-'+c);
+    if(!el)continue;
+    var v=bpGrid2[r][c];
+    el.className='p2-bp-cell';
+    if(v==='P'){el.classList.add('cp');el.textContent='P';}
+    else if(v==='B'){el.classList.add('cb');el.textContent='B';}
+    else{el.textContent='-';}
+  }
+}
+
+// 베팅금2
+var BA_R2=10, BA_C2=6;
+var baGrid2=[];
+for(var r=0;r<BA_R2;r++) baGrid2.push([0,0,0,0,0,0]);
+
+function initBaGrid2(){
+  var container=document.getElementById('baGrid2');
+  if(!container)return;
+  container.innerHTML='';
+  for(var r=0;r<BA_R2;r++){
+    var row=document.createElement('div');
+    row.className='p2-ba-row';
+    var num=document.createElement('span');
+    num.className='p2-ba-num';
+    num.textContent=r+11;
+    row.appendChild(num);
+    for(var c=0;c<BA_C2;c++){
+      var inp=document.createElement('input');
+      inp.type='number';
+      inp.className='p2-ba-inp';
+      inp.id='ba2-'+r+'-'+c;
+      inp.placeholder='-';
+      if(baGrid2[r][c]) inp.value=baGrid2[r][c];
+      inp.addEventListener('input',(function(rr,cc){return function(){baGrid2[rr][cc]=parseInt(this.value)||0;};})(r,c));
+      row.appendChild(inp);
+    }
+    container.appendChild(row);
+  }
+}
+
+function getBaArr2(){
+  var arr=[];
+  for(var r=0;r<BA_R2;r++){
+    var vals=[];
+    for(var c=0;c<BA_C2;c++){
+      var el=document.getElementById('ba2-'+r+'-'+c);
+      vals.push(el?parseInt(el.value)||0:baGrid2[r][c]||0);
+    }
+    arr.push(vals.join('-'));
+  }
+  return arr;
+}
+
+function saveBaOnly2(){
+  var baArr=getBaArr2();
+  db.collection(COL_CFG).doc('settings2').update({ba:baArr, savedAt:Date.now()})
+  .then(function(){
+    alert('✅ 베팅금(11~20번) 저장 완료!');
+  }).catch(function(){
+    db.collection(COL_CFG).doc('settings2').set({ig:new Array(10).fill(''),bp:new Array(10).fill(''),ba:baArr,savedAt:Date.now()})
+    .then(function(){alert('✅ 저장 완료!');}).catch(function(e){alert('❌ 오류: '+e.message);});
+  });
+}
+
+function saveAll2(){
+  var igArr=[];
+  for(var r=0;r<IG_R2;r++){
+    var cells=igGrid2[r].filter(function(v){return v!==null;});
+    igArr.push(cells.length>0?cells.join('-'):'');
+  }
+  var bpArr=[];
+  for(var r=0;r<BP_R2;r++){
+    var cells=bpGrid2[r].filter(function(v){return v!==null;});
+    bpArr.push(cells.length>0?cells.join('-'):'');
+  }
+  var baArr=getBaArr2();
+  // 슬롯 빨간불 (slot10~19)
+  for(var i=0;i<10;i++){
+    var dot=document.getElementById('slot'+(i+10));
+    if(!dot)continue;
+    if(igArr[i]&&igArr[i].length>0) dot.classList.add('active');
+    else dot.classList.remove('active');
+  }
+  var saveData={ig:igArr, bp:bpArr, ba:baArr, savedAt:Date.now()};
+  db.collection(COL_CFG).doc('settings2').set(saveData).then(function(){
+    var cnt=igArr.filter(function(s){return s;}).length;
+    var bpCnt=bpArr.filter(function(s){return s;}).length;
+    alert('✅ 전체 저장 완료! (11~20번)\n\n📋 입력그림: '+cnt+'개\n🎯 베팅포지션: '+bpCnt+'개\n💰 베팅금: 세트별 저장');
+  }).catch(function(e){alert('❌ 저장 실패: '+e.message);});
+}
+
+function loadAdminSettings2(){
+  db.collection(COL_CFG).doc('settings2').get().then(function(snap){
+    if(!snap.exists)return;
+    var d=snap.data();
+    var ig=d.ig||[];
+    for(var r=0;r<IG_R2;r++){
+      var s=ig[r]||'';
+      var arr=s?s.split('-'):[];
+      for(var c=0;c<IG_C2;c++) igGrid2[r][c]=(c<arr.length&&arr[c])?arr[c]:null;
+    }
+    renderIgGrid2();
+    var bp=d.bp||[];
+    for(var r=0;r<BP_R2;r++){
+      var s=bp[r]||'';
+      var arr=s?s.split('-'):[];
+      for(var c=0;c<BP_C2;c++) bpGrid2[r][c]=(c<arr.length&&arr[c])?arr[c]:null;
+    }
+    renderBpGrid2();
+    var ba=d.ba||[];
+    for(var r=0;r<BA_R2;r++){
+      var s=typeof ba[r]==='string'?ba[r]:'';
+      var arr=s?s.split('-').map(Number):[0,0,0,0];
+      for(var c=0;c<BA_C2;c++){
+        baGrid2[r][c]=arr[c]||0;
+        var el=document.getElementById('ba2-'+r+'-'+c);
+        if(el) el.value=arr[c]||'';
+      }
+    }
+    // 슬롯 복원
+    var igArr=d.ig||[];
+    for(var i=0;i<10;i++){
+      var dot=document.getElementById('slot'+(i+10));
+      if(dot){
+        if(igArr[i]&&igArr[i].length>0) dot.classList.add('active');
+        else dot.classList.remove('active');
+      }
+    }
+  }).catch(function(e){console.log('설정2 로드 오류:',e);});
+}
+
+function doReset2(){
+  if(!confirm('11~20번 설정을 전체 초기화하시겠습니까?'))return;
+  var emptyDoc={ig:new Array(10).fill(''),bp:new Array(10).fill(''),ba:new Array(10).fill('0-0-0-0'),savedAt:Date.now()};
+  db.collection(COL_CFG).doc('settings2').set(emptyDoc).then(function(){
+    for(var r=0;r<IG_R2;r++) igGrid2[r]=new Array(IG_C2).fill(null);
+    for(var r=0;r<BP_R2;r++) bpGrid2[r]=new Array(BP_C2).fill(null);
+    for(var r=0;r<BA_R2;r++) baGrid2[r]=[0,0,0,0];
+    renderIgGrid2(); renderBpGrid2();
+    for(var r=0;r<BA_R2;r++) for(var c=0;c<BA_C2;c++){var el=document.getElementById('ba2-'+r+'-'+c);if(el)el.value='';}
+    for(var i=10;i<20;i++){var d=document.getElementById('slot'+i);if(d)d.classList.remove('active');}
+    alert('✅ 설정2 초기화 완료!');
+  }).catch(function(e){alert('❌ 오류: '+e.message);});
+}
+
+// ==========================================
+// Panel 4 - 설정3 (21~30번)
+// ==========================================
+var IG_R3=10, IG_C3=14;
+var igGrid3=[];
+for(var r=0;r<IG_R3;r++) igGrid3.push(new Array(IG_C3).fill(null));
+
+function initIgGrid3(){
+  var container=document.getElementById('igRows3');
+  if(!container)return;
+  container.innerHTML='';
+  for(var r=0;r<IG_R3;r++){
+    var row=document.createElement('div');
+    row.className='p2-ig-row';
+    var num=document.createElement('span');
+    num.className='p2-row-num';
+    num.textContent=r+21; // 21~30
+    row.appendChild(num);
+    for(var c=0;c<IG_C3;c++){
+      var cell=document.createElement('div');
+      cell.className='p2-ig-cell';
+      cell.id='ig3-'+r+'-'+c;
+      cell.textContent='-';
+      cell.onclick=(function(rr,cc){return function(){toggleIgCell3(rr,cc);};})(r,c);
+      row.appendChild(cell);
+    }
+    container.appendChild(row);
+  }
+}
+
+function toggleIgCell3(r,c){
+  var v=igGrid3[r][c];
+  igGrid3[r][c]=(v===null)?'P':(v==='P')?'B':null;
+  renderIgGrid3();
+}
+function renderIgGrid3(){
+  for(var r=0;r<IG_R3;r++)for(var c=0;c<IG_C3;c++){
+    var el=document.getElementById('ig3-'+r+'-'+c);
+    if(!el)continue;
+    var v=igGrid3[r][c];
+    el.className='p2-ig-cell';
+    if(v==='P'){el.classList.add('cp');el.textContent='P';}
+    else if(v==='B'){el.classList.add('cb');el.textContent='B';}
+    else{el.textContent='-';}
+  }
+}
+
+// 베팅포지션3
+var BP_R3=10, BP_C3=6;
+var bpGrid3=[];
+for(var r=0;r<BP_R3;r++) bpGrid3.push(new Array(BP_C3).fill(null));
+
+function initBpGrid3(){
+  var leftEl=document.getElementById('bpLeft3');
+  var rightEl=document.getElementById('bpRight3');
+  if(!leftEl||!rightEl)return;
+  leftEl.innerHTML=''; rightEl.innerHTML='';
+  for(var r=0;r<BP_R3;r++){
+    var row=document.createElement('div');
+    row.className='p2-bp-row';
+    var num=document.createElement('span');
+    num.className='p2-row-num';
+    num.textContent=r+21; // 21~30
+    row.appendChild(num);
+    for(var c=0;c<BP_C3;c++){
+      var cell=document.createElement('div');
+      cell.className='p2-bp-cell';
+      cell.id='bp3-'+r+'-'+c;
+      cell.textContent='-';
+      cell.onclick=(function(rr,cc){return function(){toggleBpCell3(rr,cc);};})(r,c);
+      row.appendChild(cell);
+    }
+    if(r<5)leftEl.appendChild(row);
+    else rightEl.appendChild(row);
+  }
+}
+
+function toggleBpCell3(r,c){
+  var v=bpGrid3[r][c];
+  bpGrid3[r][c]=(v===null)?'P':(v==='P')?'B':null;
+  renderBpGrid3();
+}
+function renderBpGrid3(){
+  for(var r=0;r<BP_R3;r++)for(var c=0;c<BP_C3;c++){
+    var el=document.getElementById('bp3-'+r+'-'+c);
+    if(!el)continue;
+    var v=bpGrid3[r][c];
+    el.className='p2-bp-cell';
+    if(v==='P'){el.classList.add('cp');el.textContent='P';}
+    else if(v==='B'){el.classList.add('cb');el.textContent='B';}
+    else{el.textContent='-';}
+  }
+}
+
+// 베팅금3
+var BA_R3=10, BA_C3=6;
+var baGrid3=[];
+for(var r=0;r<BA_R3;r++) baGrid3.push([0,0,0,0,0,0]);
+
+function initBaGrid3(){
+  var container=document.getElementById('baGrid3');
+  if(!container)return;
+  container.innerHTML='';
+  for(var r=0;r<BA_R3;r++){
+    var row=document.createElement('div');
+    row.className='p2-ba-row';
+    var num=document.createElement('span');
+    num.className='p2-ba-num';
+    num.textContent=r+21;
+    row.appendChild(num);
+    for(var c=0;c<BA_C3;c++){
+      var inp=document.createElement('input');
+      inp.type='number';
+      inp.className='p2-ba-inp';
+      inp.id='ba3-'+r+'-'+c;
+      inp.placeholder='-';
+      if(baGrid3[r][c]) inp.value=baGrid3[r][c];
+      inp.addEventListener('input',(function(rr,cc){return function(){baGrid3[rr][cc]=parseInt(this.value)||0;};})(r,c));
+      row.appendChild(inp);
+    }
+    container.appendChild(row);
+  }
+}
+
+function getBaArr3(){
+  var arr=[];
+  for(var r=0;r<BA_R3;r++){
+    var vals=[];
+    for(var c=0;c<BA_C3;c++){
+      var el=document.getElementById('ba3-'+r+'-'+c);
+      vals.push(el?parseInt(el.value)||0:baGrid3[r][c]||0);
+    }
+    arr.push(vals.join('-'));
+  }
+  return arr;
+}
+
+function saveBaOnly3(){
+  var baArr=getBaArr3();
+  db.collection(COL_CFG).doc('settings3').update({ba:baArr, savedAt:Date.now()})
+  .then(function(){
+    alert('✅ 베팅금(21~30번) 저장 완료!');
+  }).catch(function(){
+    db.collection(COL_CFG).doc('settings3').set({ig:new Array(10).fill(''),bp:new Array(10).fill(''),ba:baArr,savedAt:Date.now()})
+    .then(function(){alert('✅ 저장 완료!');}).catch(function(e){alert('❌ 오류: '+e.message);});
+  });
+}
+
+function saveAll3(){
+  var igArr=[];
+  for(var r=0;r<IG_R3;r++){
+    var cells=igGrid3[r].filter(function(v){return v!==null;});
+    igArr.push(cells.length>0?cells.join('-'):'');
+  }
+  var bpArr=[];
+  for(var r=0;r<BP_R3;r++){
+    var cells=bpGrid3[r].filter(function(v){return v!==null;});
+    bpArr.push(cells.length>0?cells.join('-'):'');
+  }
+  var baArr=getBaArr3();
+  // 슬롯 빨간불 (slot20~29)
+  for(var i=0;i<10;i++){
+    var dot=document.getElementById('slot'+(i+20));
+    if(!dot)continue;
+    if(igArr[i]&&igArr[i].length>0) dot.classList.add('active');
+    else dot.classList.remove('active');
+  }
+  var saveData={ig:igArr, bp:bpArr, ba:baArr, savedAt:Date.now()};
+  db.collection(COL_CFG).doc('settings3').set(saveData).then(function(){
+    var cnt=igArr.filter(function(s){return s;}).length;
+    var bpCnt=bpArr.filter(function(s){return s;}).length;
+    alert('✅ 전체 저장 완료! (21~30번)\n\n📋 입력그림: '+cnt+'개\n🎯 베팅포지션: '+bpCnt+'개\n💰 베팅금: 세트별 저장');
+  }).catch(function(e){alert('❌ 저장 실패: '+e.message);});
+}
+
+function loadAdminSettings3(){
+  db.collection(COL_CFG).doc('settings3').get().then(function(snap){
+    if(!snap.exists)return;
+    var d=snap.data();
+    var ig=d.ig||[];
+    for(var r=0;r<IG_R3;r++){
+      var s=ig[r]||'';
+      var arr=s?s.split('-'):[];
+      for(var c=0;c<IG_C3;c++) igGrid3[r][c]=(c<arr.length&&arr[c])?arr[c]:null;
+    }
+    renderIgGrid3();
+    var bp=d.bp||[];
+    for(var r=0;r<BP_R3;r++){
+      var s=bp[r]||'';
+      var arr=s?s.split('-'):[];
+      for(var c=0;c<BP_C3;c++) bpGrid3[r][c]=(c<arr.length&&arr[c])?arr[c]:null;
+    }
+    renderBpGrid3();
+    var ba=d.ba||[];
+    for(var r=0;r<BA_R3;r++){
+      var s=typeof ba[r]==='string'?ba[r]:'';
+      var arr=s?s.split('-').map(Number):[0,0,0,0,0,0];
+      for(var c=0;c<BA_C3;c++){
+        baGrid3[r][c]=arr[c]||0;
+        var el=document.getElementById('ba3-'+r+'-'+c);
+        if(el) el.value=arr[c]||'';
+      }
+    }
+    // 슬롯 복원
+    var igArr=d.ig||[];
+    for(var i=0;i<10;i++){
+      var dot=document.getElementById('slot'+(i+20));
+      if(dot){
+        if(igArr[i]&&igArr[i].length>0) dot.classList.add('active');
+        else dot.classList.remove('active');
+      }
+    }
+  }).catch(function(e){console.log('설정3 로드 오류:',e);});
+}
+
+function doReset3(){
+  if(!confirm('21~30번 설정을 전체 초기화하시겠습니까?'))return;
+  var emptyDoc={ig:new Array(10).fill(''),bp:new Array(10).fill(''),ba:new Array(10).fill('0-0-0-0-0-0'),savedAt:Date.now()};
+  db.collection(COL_CFG).doc('settings3').set(emptyDoc).then(function(){
+    for(var r=0;r<IG_R3;r++) igGrid3[r]=new Array(IG_C3).fill(null);
+    for(var r=0;r<BP_R3;r++) bpGrid3[r]=new Array(BP_C3).fill(null);
+    for(var r=0;r<BA_R3;r++) baGrid3[r]=[0,0,0,0,0,0];
+    renderIgGrid3(); renderBpGrid3();
+    for(var r=0;r<BA_R3;r++) for(var c=0;c<BA_C3;c++){var el=document.getElementById('ba3-'+r+'-'+c);if(el)el.value='';}
+    for(var i=20;i<30;i++){var d=document.getElementById('slot'+i);if(d)d.classList.remove('active');}
+    alert('✅ 설정3 초기화 완료!');
+  }).catch(function(e){alert('❌ 오류: '+e.message);});
+}
+
+// 전체 리셋 (설정1)
+function doReset(){
+  if(!confirm('모든 설정을 초기화하시겠습니까?\n(입력그림, 베팅포지션, 베팅금 전체 삭제)'))return;
+  var emptyDoc={ig:new Array(10).fill(''),bp:new Array(10).fill(''),ba:[0,0,0,0],savedAt:Date.now()};
+  db.collection(COL_CFG).doc('settings').set(emptyDoc).then(function(){
+    for(var r=0;r<IG_R;r++) igGrid[r]=new Array(IG_C).fill(null);
+    for(var r=0;r<BP_R;r++) bpGrid[r]=new Array(BP_C).fill(null);
+    for(var r=0;r<BA_R;r++) baGrid[r]=[0,0,0,0,0,0];
+    renderIgGrid(); renderBpGrid();
+    // baGrid DOM 초기화
+    for(var r=0;r<BA_R;r++) for(var c=0;c<BA_C;c++){var el=document.getElementById('ba-'+r+'-'+c);if(el)el.value='';}
+    // 슬롯 초기화
+    for(var i=0;i<10;i++){var d=document.getElementById('slot'+i);if(d)d.classList.remove('active');}
+    alert('✅ 전체 초기화 완료!');
+  }).catch(function(e){alert('❌ 오류: '+e.message);});
+}
+
+function prevStep(){
+  showPanel1();
+}
+
+// PC 제어
+function togglePC(){
+  var on=document.getElementById('pcToggle').checked;
+  var st=document.getElementById('pcStatus');
+  st.textContent=on?'✓ 현재 컴퓨터에서 동영상 재생이 가능합니다':'✕ 컴퓨터 재생 제한 (모바일만 가능)';
+  st.style.background=on?'rgba(16,185,129,0.15)':'rgba(239,68,68,0.15)';
+  st.style.borderColor=on?'rgba(16,185,129,0.3)':'rgba(239,68,68,0.3)';
+  st.style.color=on?'#6ee7b7':'#fca5a5';
+}
+
+// 로그아웃
+function adminLogout(){
+  document.getElementById('adminScreen').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('loginInput').value='';
+  showPanel1();
+}
+
+// 회원 관리
+var idList=[],currentPage=1,perPage=5;
+async function loadAdminMembers(){
+  try{
+    var snap=await db.collection(COL_MEM).get();
+    idList=[];
+    snap.forEach(function(d){idList.push(d.id);});
+    idList.sort(); renderIdList();
+  }catch(e){console.error(e);}
+}
+window.renderIdList=function(){
+  var list=document.getElementById('idList');
+  var pg=document.getElementById('pagination');
+  if(!list)return;
+  var tot=Math.ceil(idList.length/perPage), st=(currentPage-1)*perPage;
+  if(idList.length===0){list.innerHTML='<div class="p1-no-member">등록된 회원이 없습니다</div>';}
+  else{
+    list.innerHTML='';
+    idList.slice(st,st+perPage).forEach(function(id){
+      var div=document.createElement('div'); div.className='p1-id-item';
+      div.innerHTML='<span class="p1-id-text">'+id+'</span><button class="p1-btn-del" onclick="deleteMember(\''+id+'\')">삭제</button>';
+      list.appendChild(div);
+    });
+  }
+  if(!pg)return; pg.innerHTML='';
+  for(var i=1;i<=Math.max(1,tot);i++){
+    var btn=document.createElement('button'); btn.className='p1-page-btn'; btn.textContent=i;
+    btn.onclick=(function(n){return function(){currentPage=n;renderIdList();};})(i);
+    pg.appendChild(btn);
+  }
+};
+window.createId=async function(){
+  var el=document.getElementById('idInput');
+  var raw=el?el.value.trim().toUpperCase():'';
+  var newId=raw||'MBBC-'+Math.random().toString(36).substr(2,5).toUpperCase();
+  if(idList.includes(newId)){alert('이미 존재하는 ID입니다');return;}
+  try{
+    await db.collection(COL_MEM).doc(newId).set({createdAt:new Date().toISOString()});
+    if(el)el.value='';
+    alert('생성완료: '+newId);
+    await loadAdminMembers();
+  }catch(e){alert('생성 오류: '+e.message);}
+};
+window.deleteMember=async function(id){
+  if(!confirm(id+' 를 삭제하시겠습니까?'))return;
+  try{await db.collection(COL_MEM).doc(id).delete();await loadAdminMembers();}
+  catch(e){alert('삭제 오류');}
+};
+</script>
+
 <!-- ===== Firebase SDK ===== -->
-<!-- === AI 모드 활성화 모달 (5단계 패배시) === -->
-<div id="aiModeActivation" class="ai-modal">
-  <div class="ai-modal-content">
-    <div class="ai-icon ai-icon-activate"></div>
-    <div class="ai-title-en">SWITCH TO AI MODE</div>
-    <div class="ai-title-ko">AI 모드로 전환</div>
-    <div class="ai-loading">
-      <div class="ai-loading-bar">
-        <div class="ai-loading-fill"></div>
-      </div>
-      <div class="ai-loading-text">Neural network analyzing patterns...</div>
-    </div>
-    <div class="ai-buttons">
-      <button class="ai-btn ai-btn-primary" onclick="activateAIMode()">Activate AI</button>
-      <button class="ai-btn ai-btn-secondary" onclick="closeAIModal('aiModeActivation')">Continue Manual</button>
-    </div>
-  </div>
-</div>
-
-<!-- === AI 모드 해제 모달 (6-15단계 성공시) === -->
-<div id="aiModeDeactivation" class="ai-modal">
-  <div class="ai-modal-content">
-    <div class="ai-icon ai-icon-deactivate"></div>
-    <div class="ai-title-en">AI MODE DISABLED</div>
-    <div class="ai-title-ko">AI 모드가 해제되었습니다</div>
-    <div class="ai-loading">
-      <div class="ai-loading-bar">
-        <div class="ai-loading-fill"></div>
-      </div>
-      <div class="ai-loading-text">Returning to manual control...</div>
-    </div>
-    <div class="ai-buttons">
-      <button class="ai-btn ai-btn-primary" onclick="deactivateAIMode()">Return Manual</button>
-      <button class="ai-btn ai-btn-secondary" onclick="closeAIModal('aiModeDeactivation')">Keep AI Mode</button>
-    </div>
-  </div>
-</div>
-
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
@@ -974,10 +1793,10 @@ const firebaseConfig={
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 const ADMIN_IDS=['MBBC-1203','MBBC-1205'];
-const COL_MEM='bac1_members';
-const COL_SES='bac1_sessions';
-const COL_SIG='bac1_signal';
-const COL_CFG='bac1_config';
+const COL_MEM='baccarat_members';
+const COL_SES='baccarat_sessions';
+const COL_SIG='baccarat_signal';
+const COL_CFG='baccarat_config';
 
 // A → Firebase 수동 신호
 window.fbSendSignal=async function(type,amount){
@@ -995,57 +1814,88 @@ function startSignalListener(){
   });
 }
 
-// B: 설정 실시간 수신 - startIdx 기준으로 30개 배열에 채움
-function loadBConfig(d, startIdx){
-  var ig=d.ig||[], bp=d.bp||[], ba=d.ba||[], ar=d.ar||[];
-
-  // 입력그림 패턴
-  ig.forEach(function(s,i){
-    window.igPatterns[startIdx+i]=(s&&s.length>0)?s.split('-'):null;
-  });
-  // 베팅포지션
-  bp.forEach(function(s,i){
-    window.bpPositions[startIdx+i]=(s&&s.length>0)?s.split('-'):null;
-  });
-  // 빨간불 행 (activeRows) - A에서 저장한 ar 필드
-  ar.forEach(function(v,i){
-    activeRows[startIdx+i]=v===1||v===true;
-  });
-  // ★ 단계별 베팅금 (ba[i] = 해당 단계의 "금1-금2-금3-..." 문자열)
-  ba.forEach(function(s,i){
-    var stageIdx=startIdx+i;
-    if(typeof s==='string'&&s.length>0){
-      window.betAmountsPerStage[stageIdx]=s.split('-').map(Number).filter(function(n){return n>0;});
-    } else {
-      window.betAmountsPerStage[stageIdx]=[];
-    }
-  });
+// B: 설정 실시간 수신 (A가 꺼도 Firebase에서 로드)
+function loadBConfig(d){
+  var ig=d.ig||[], bp=d.bp||[], ba=d.ba||[];
+  window.igPatterns=ig.map(function(s){return(s&&s.length>0)?s.split('-'):null;});
+  window.bpPositions=bp.map(function(s){return(s&&s.length>0)?s.split('-'):null;});
+  // 세트별 베팅금액 (ba가 문자열 배열이면 per-set, 숫자 배열이면 legacy global)
+  if(Array.isArray(ba) && typeof ba[0]==='string'){
+    // 새 포맷: 세트별 ["10000-20000-40000-80000", ...]
+    window.betAmountsPerSet=ba.map(function(s){
+      if(!s||s.length===0) return [0,0,0,0];
+      return s.split('-').map(Number);
+    });
+  } else {
+    // 구 포맷: 전역 [10000, 20000, 40000, 80000]
+    var globalAmt=Array.isArray(ba)?ba:[0,0,0,0];
+    window.betAmountsPerSet=new Array(10).fill(globalAmt);
+  }
+  // ※ bState 리셋 제거 - Firebase 재연결 시 베팅 상태 초기화 방지
 }
 
 function startConfigListener(){
-  // 설정1 (1~10번 → 단계 1~10, index 0~9)
+  // 설정1 (1~10번)
   var ref=db.collection(COL_CFG).doc('settings');
-  ref.get().then(function(snap){if(snap.exists)loadBConfig(snap.data(),0);});
-  ref.onSnapshot(function(snap){if(snap.exists)loadBConfig(snap.data(),0);});
-  // 설정2 (11~20번 → 단계 11~20, index 10~19)
+  ref.get().then(function(snap){if(snap.exists)loadBConfig(snap.data());});
+  ref.onSnapshot(function(snap){if(snap.exists)loadBConfig(snap.data());});
+  // 설정2 (11~20번)
   var ref2=db.collection(COL_CFG).doc('settings2');
-  ref2.get().then(function(snap){if(snap.exists)loadBConfig(snap.data(),10);});
-  ref2.onSnapshot(function(snap){if(snap.exists)loadBConfig(snap.data(),10);});
-  // 설정3 (21~30번 → 단계 21~30, index 20~29)
+  ref2.get().then(function(snap){if(snap.exists)loadBConfig2(snap.data());});
+  ref2.onSnapshot(function(snap){if(snap.exists)loadBConfig2(snap.data());});
+  // 설정3 (21~30번)
   var ref3=db.collection(COL_CFG).doc('settings3');
-  ref3.get().then(function(snap){if(snap.exists)loadBConfig(snap.data(),20);});
-  ref3.onSnapshot(function(snap){if(snap.exists)loadBConfig(snap.data(),20);});
+  ref3.get().then(function(snap){if(snap.exists)loadBConfig3(snap.data());});
+  ref3.onSnapshot(function(snap){if(snap.exists)loadBConfig3(snap.data());});
+}
+
+function loadBConfig2(d){
+  var ig=d.ig||[], bp=d.bp||[], ba=d.ba||[];
+  var igPats=ig.map(function(s){return(s&&s.length>0)?s.split('-'):null;});
+  var bpPos=bp.map(function(s){return(s&&s.length>0)?s.split('-'):null;});
+  var baPerSet;
+  if(Array.isArray(ba)&&typeof ba[0]==='string'){
+    baPerSet=ba.map(function(s){return s?s.split('-').map(Number):[0,0,0,0];});
+  } else {
+    baPerSet=new Array(10).fill([0,0,0,0]);
+  }
+  // 설정1 뒤에 붙이기 (index 10~19)
+  var pats=window.igPatterns||new Array(10).fill(null);
+  var pos=window.bpPositions||new Array(10).fill(null);
+  var amts=window.betAmountsPerSet||new Array(10).fill([0,0,0,0]);
+  window.igPatterns=pats.slice(0,10).concat(igPats);
+  window.bpPositions=pos.slice(0,10).concat(bpPos);
+  window.betAmountsPerSet=amts.slice(0,10).concat(baPerSet);
+}
+
+function loadBConfig3(d){
+  var ig=d.ig||[], bp=d.bp||[], ba=d.ba||[];
+  var igPats=ig.map(function(s){return(s&&s.length>0)?s.split('-'):null;});
+  var bpPos=bp.map(function(s){return(s&&s.length>0)?s.split('-'):null;});
+  var baPerSet;
+  if(Array.isArray(ba)&&typeof ba[0]==='string'){
+    baPerSet=ba.map(function(s){return s?s.split('-').map(Number):[0,0,0,0,0,0];});
+  } else {
+    baPerSet=new Array(10).fill([0,0,0,0,0,0]);
+  }
+  // 설정2 뒤에 붙이기 (index 20~29)
+  var pats=window.igPatterns||new Array(20).fill(null);
+  var pos=window.bpPositions||new Array(20).fill(null);
+  var amts=window.betAmountsPerSet||new Array(20).fill([0,0,0,0,0,0]);
+  window.igPatterns=pats.slice(0,20).concat(igPats);
+  window.bpPositions=pos.slice(0,20).concat(bpPos);
+  window.betAmountsPerSet=amts.slice(0,20).concat(baPerSet);
 }
 
 // 기기 ID
 function getDeviceId(){
-  var id=localStorage.getItem('mbbc_bac1_device');
-  if(!id){id='BAC-'+Date.now().toString(36)+'-'+Math.random().toString(36).substr(2,9);localStorage.setItem('mbbc_bac1_device',id);}
+  var id=localStorage.getItem('mbbc_bac_device');
+  if(!id){id='BAC-'+Date.now().toString(36)+'-'+Math.random().toString(36).substr(2,9);localStorage.setItem('mbbc_bac_device',id);}
   return id;
 }
 function showLoading(on){document.getElementById('loadingDiv').style.display=on?'flex':'none';}
 
-// 로그인 (회원 전용)
+// 로그인
 window.login=async function(){
   var input=document.getElementById('loginInput').value.trim().toUpperCase();
   var err=document.getElementById('loginError');
@@ -1053,106 +1903,38 @@ window.login=async function(){
   if(!input){err.textContent='아이디를 입력해주세요';err.style.display='block';return;}
   showLoading(true);
   try{
-    var mem=await db.collection(COL_MEM).doc(input).get();
-    if(mem.exists){
-      var isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      if(isMobile){
-        var devId=getDeviceId();
-        var ses=await db.collection(COL_SES).doc(input).get();
-        if(ses.exists&&ses.data().deviceId&&ses.data().deviceId!==devId){
-          err.textContent='이미 다른 기기에서 접속 중입니다';err.style.display='block';showLoading(false);return;
-        }
-        await db.collection(COL_SES).doc(input).set({deviceId:devId,loginTime:new Date().toISOString()});
-      }
-      window.currentUser={id:input,role:'member'};
+    if(ADMIN_IDS.includes(input)){
+      window.currentUser={id:input,role:'admin'};
       document.getElementById('loginScreen').style.display='none';
-      document.getElementById('memberScreen').style.display='flex';
-      loadFromStorage(); drawBoard();
-      startSignalListener(); startConfigListener();
+      document.getElementById('adminScreen').style.display='block';
+      showPanel1();
+      loadAdminMembers();
     } else {
-      err.textContent='등록되지 않은 아이디입니다';err.style.display='block';
+      var mem=await db.collection(COL_MEM).doc(input).get();
+      if(mem.exists){
+        var isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if(isMobile){
+          var devId=getDeviceId();
+          var ses=await db.collection(COL_SES).doc(input).get();
+          if(ses.exists&&ses.data().deviceId&&ses.data().deviceId!==devId){
+            err.textContent='이미 다른 기기에서 접속 중입니다';err.style.display='block';showLoading(false);return;
+          }
+          await db.collection(COL_SES).doc(input).set({deviceId:devId,loginTime:new Date().toISOString()});
+        }
+        window.currentUser={id:input,role:'member'};
+        document.getElementById('loginScreen').style.display='none';
+        document.getElementById('memberScreen').style.display='flex';
+        loadFromStorage(); drawBoard();
+        startSignalListener(); startConfigListener();
+      } else {
+        err.textContent='등록되지 않은 아이디입니다';err.style.display='block';
+      }
     }
   }catch(e){err.textContent='오류: '+e.message;err.style.display='block';}
   showLoading(false);
 };
 
 document.getElementById('loginInput').addEventListener('keydown',function(e){if(e.key==='Enter')window.login();});
-
-// === AI 모드 모달 함수들 ===
-window.speakEnglish = function(text) {
-  try {
-    window.speechSynthesis.cancel();
-    var msg = new SpeechSynthesisUtterance(text);
-    msg.lang = 'en-US';
-    msg.rate = 0.9;
-    msg.pitch = 1.0;
-    msg.volume = 0.9; // 사운드 크게
-    window.speechSynthesis.speak(msg);
-  } catch(e) {}
-};
-
-window.showAIModeActivation = function() {
-  const modal = document.getElementById('aiModeActivation');
-  modal.style.display = 'flex';
-  setTimeout(() => speakEnglish('AI mode activated'), 500);
-  // 3초 후 자동 소멸
-  setTimeout(() => {
-    modal.style.display = 'none';
-  }, 3000);
-};
-
-window.showAIModeDeactivation = function() {
-  const modal = document.getElementById('aiModeDeactivation');
-  modal.style.display = 'flex';  
-  setTimeout(() => speakEnglish('AI mode disabled'), 500);
-  // 3초 후 자동 소멸
-  setTimeout(() => {
-    modal.style.display = 'none';
-  }, 3000);
-};
-
-window.closeAIModal = function(modalId) {
-  document.getElementById(modalId).style.display = 'none';
-};
-
-window.activateAIMode = function() {
-  const modal = document.getElementById('aiModeActivation');
-  const buttons = modal.querySelector('.ai-buttons');
-  const loading = modal.querySelector('.ai-loading');
-  
-  buttons.style.display = 'none';
-  loading.style.display = 'block';
-  
-  setTimeout(() => {
-    modal.style.display = 'none';
-    buttons.style.display = 'flex';
-    loading.style.display = 'none';
-  }, 3000);
-};
-
-window.deactivateAIMode = function() {
-  const modal = document.getElementById('aiModeDeactivation');
-  const buttons = modal.querySelector('.ai-buttons');
-  const loading = modal.querySelector('.ai-loading');
-  
-  buttons.style.display = 'none';
-  loading.style.display = 'block';
-  
-  setTimeout(() => {
-    modal.style.display = 'none';
-    buttons.style.display = 'flex';
-    loading.style.display = 'none';
-  }, 2500);
-};
-
-</script>
-
-
-<script>
-document.addEventListener('touchstart',function _u(){
-  unlockAudio();
-  document.removeEventListener('touchstart',_u);
-},{once:true});
 </script>
 </body>
 </html>
