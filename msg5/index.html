@@ -1221,14 +1221,23 @@ window.login=async function(){
     var mem=await db.collection(COL_MEM).doc(input).get();
     if(mem.exists){
       var isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      if(isMobile){
-        var devId=getDeviceId();
-        var ses=await db.collection(COL_SES).doc(input).get();
-        if(ses.exists&&ses.data().deviceId&&ses.data().deviceId!==devId){
-          err.textContent='이미 다른 기기에서 접속 중입니다';err.style.display='block';showLoading(false);return;
+      var devId=getDeviceId();
+      var ses=await db.collection(COL_SES).doc(input).get();
+      if(ses.exists){
+        var sd=ses.data();
+        if(isMobile){
+          if(sd.mobileDeviceId&&sd.mobileDeviceId!==devId){
+            err.textContent='다른 휴대폰에서 이미 로그인 중입니다';err.style.display='block';showLoading(false);return;
+          }
+        }else{
+          if(sd.pcDeviceId&&sd.pcDeviceId!==devId){
+            err.textContent='다른 PC에서 이미 로그인 중입니다';err.style.display='block';showLoading(false);return;
+          }
         }
-        await db.collection(COL_SES).doc(input).set({deviceId:devId,loginTime:new Date().toISOString()});
       }
+      var upd={loginTime:new Date().toISOString()};
+      if(isMobile)upd.mobileDeviceId=devId; else upd.pcDeviceId=devId;
+      await db.collection(COL_SES).doc(input).set(upd,{merge:true});
       window.currentUser={id:input,role:'member'};
       document.getElementById('loginScreen').style.display='none';
       document.getElementById('memberScreen').style.display='flex';
