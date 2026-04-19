@@ -551,5 +551,18 @@ const _0x441ea4=_0x58a2;(function(_0x518776,_0x259b12){const _0xb59250=_0x58a2,_
   </div>
 </div>
 
+
+<script>
+// TTS 초기화 - 첫 번째 클릭시 Chrome TTS 활성화
+document.addEventListener('click', function initTTS() {
+  try {
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance('');
+    u.volume = 0;
+    window.speechSynthesis.speak(u);
+  } catch(e) {}
+  document.removeEventListener('click', initTTS);
+}, {once: true});
+</script>
 </body>
 </html>
