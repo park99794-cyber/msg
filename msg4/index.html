@@ -264,7 +264,7 @@ body { background:#000; min-height:100vh; }
     <button class="btn-bp btn-b" onclick="inputResult('B')">B</button>
     <div class="mid-btns">
       <button class="btn-cancel" onclick="undoLast()">←</button>
-      <button class="btn-reset-q" onclick="resetBoard()">Q리셋</button>
+      <button class="btn-reset-q" onclick="resetBoard();trackerActive=false;var _b=document.querySelector('.tracker-start');if(_b)_b.style.background='linear-gradient(135deg,#00bfff,#0080ff)';">Q리셋</button>
     </div>
     <button class="btn-bp btn-p" onclick="inputResult('P')">P</button>
   </div>
@@ -1265,12 +1265,31 @@ window.startTracker=function(){
   trackerActive=true;
   if(el)el.value=amt;
   var btn=document.querySelector('.tracker-start');
-  if(btn)btn.classList.add('active');
+  if(btn){btn.style.background='linear-gradient(135deg,#ff6600,#ff3300)';}
 };
 window.updateTrackerDisplay=function(){
   var el=document.getElementById('startAmt');
-  if(el&&trackerActive){el.value=trackerCurrent;}
+  if(el&&trackerActive){
+    el.value=trackerCurrent;
+  }
+  /* 리셋 감지: trackerActive=false 이면 버튼 파란색 복귀 */
+  var btn=document.querySelector('.tracker-start');
+  if(btn){
+    if(!trackerActive){
+      btn.style.background='linear-gradient(135deg,#00bfff,#0080ff)';
+    }
+  }
 };
+/* startAmt 입력창에 값 입력시 버튼 파란색으로 복귀 */
+setTimeout(function(){
+  var el=document.getElementById('startAmt');
+  if(el){
+    el.addEventListener('input',function(){
+      var btn=document.querySelector('.tracker-start');
+      if(btn)btn.style.background='linear-gradient(135deg,#00bfff,#0080ff)';
+    });
+  }
+},500);
 </script>
 </body>
 </html>
