@@ -184,6 +184,10 @@ body { background:#000; min-height:100vh; }
   padding:8px 16px; background:linear-gradient(135deg,#00bfff,#0080ff);
   color:#fff; border:none; border-radius:8px;
   font-size:15px; font-weight:700; cursor:pointer; letter-spacing:1px; flex-shrink:0;
+  transition:background 0.3s;
+}
+.tracker-start.active {
+  background:linear-gradient(135deg,#ff6600,#ff3300);
 }
 .tracker-result {
   width:100%; padding:6px 10px;
@@ -254,11 +258,7 @@ body { background:#000; min-height:100vh; }
     <input type="number" class="tracker-input" id="startAmt" placeholder="금액입력" min="1" max="100000000">
     <button class="tracker-start" onclick="startTracker()">Start</button>
   </div>
-  <div class="tracker-result" id="trackerResult" style="display:none;">
-    <span class="tracker-label">손익</span>
-    <span class="tracker-value tracker-zero" id="trackerVal">0</span>
-    <span class="tracker-label" id="trackerCount">0판</span>
-  </div>
+
 
   <div class="btn-row">
     <button class="btn-bp btn-b" onclick="inputResult('B')">B</button>
@@ -1252,6 +1252,25 @@ window.login=async function(){
 document.getElementById('loginInput').addEventListener('keydown',function(e){if(e.key==='Enter')window.login();});
 document.addEventListener("touchstart",function _ttsInit(){try{var u=new SpeechSynthesisUtterance(" ");u.volume=0;window.speechSynthesis.speak(u);document.removeEventListener("touchstart",_ttsInit);}catch(e){}},{once:true,passive:true});
 setInterval(function(){try{if(window.speechSynthesis.paused&&window.speechSynthesis.speaking){window.speechSynthesis.resume();}}catch(e){}},5000);
+
+/* ===== 손익 → 금액창 직접 표시 ===== */
+window.startTracker=function(){
+  var el=document.getElementById('startAmt');
+  var amt=parseInt(el?el.value:0)||0;
+  if(amt<=0){alert('시작 금액을 입력해주세요');return;}
+  if(amt>100000000)amt=100000000;
+  trackerStart=amt;
+  trackerCurrent=amt;
+  trackerBets=[];
+  trackerActive=true;
+  if(el)el.value=amt;
+  var btn=document.querySelector('.tracker-start');
+  if(btn)btn.classList.add('active');
+};
+window.updateTrackerDisplay=function(){
+  var el=document.getElementById('startAmt');
+  if(el&&trackerActive){el.value=trackerCurrent;}
+};
 </script>
 </body>
 </html>
