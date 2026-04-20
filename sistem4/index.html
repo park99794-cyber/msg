@@ -291,6 +291,10 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
   padding:8px 16px; background:linear-gradient(135deg,#00bfff,#0080ff);
   color:#fff; border:none; border-radius:8px;
   font-size:15px; font-weight:700; cursor:pointer; letter-spacing:1px; flex-shrink:0;
+  transition:background 0.3s;
+}
+.tracker-start.active {
+  background:linear-gradient(135deg,#ff6600,#ff3300);
 }
 .tracker-result {
   width:100%; padding:6px 10px;
@@ -477,11 +481,7 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
     <input type="number" class="tracker-input" id="startAmt" placeholder="금액입력" min="1" max="100000000">
     <button class="tracker-start" onclick="startTracker()">Start</button>
   </div>
-  <div class="tracker-result" id="trackerResult" style="display:none;">
-    <span class="tracker-label">손익</span>
-    <span class="tracker-value tracker-zero" id="trackerVal">0</span>
-    <span class="tracker-label" id="trackerCount">0판</span>
-  </div>
+
 
   <div class="btn-row">
     <button class="btn-bp btn-b" onclick="inputResult('B')">B</button>
@@ -528,9 +528,8 @@ const COL_CFG='sys4_config';
 
 /* ===== 신호 전송 ===== */
 window.sendSignalToFirebase=async function(type,amount){
-  try{
-    await db.collection(COL_SIG).doc('current').set({type,amount,timestamp:Date.now()});
-  }catch(e){console.error('신호전송 오류:',e);}
+  try{await db.collection(COL_SIG).doc('current').set({type,amount,timestamp:Date.now()});}
+  catch(e){console.error('신호전송 오류:',e);}
 };
 
 /* ===== 신호 수신 ===== */
@@ -546,22 +545,14 @@ function startSignalListener(){
 /* ===== 설정 수신 ===== */
 function loadBConfig(d,offset){
   var ig=d.ig||[],bp=d.bp||[],ba=d.ba||[],ar=d.ar||[];
-  ig.forEach(function(s,i){
-    window.igPatterns[offset+i]=(s&&s.length>0)?s.split('-'):null;
-  });
-  bp.forEach(function(s,i){
-    window.bpPositions[offset+i]=(s&&s.length>0)?s.split('-'):null;
-  });
-  ar.forEach(function(v,i){
-    activeRows[offset+i]=(v===1||v===true);
-  });
+  ig.forEach(function(s,i){window.igPatterns[offset+i]=(s&&s.length>0)?s.split('-'):null;});
+  bp.forEach(function(s,i){window.bpPositions[offset+i]=(s&&s.length>0)?s.split('-'):null;});
+  ar.forEach(function(v,i){activeRows[offset+i]=(v===1||v===true);});
   ba.forEach(function(s,i){
     var idx=offset+i;
     if(typeof s==='string'&&s.length>0){
       window.betAmountsPerStage[idx]=s.split('-').map(Number).filter(function(x){return x>0;});
-    }else{
-      window.betAmountsPerStage[idx]=[];
-    }
+    }else{window.betAmountsPerStage[idx]=[];}
   });
 }
 function startConfigListener(){
@@ -579,17 +570,12 @@ function startConfigListener(){
 /* ===== 기기 ID ===== */
 function getDeviceId(){
   var id=localStorage.getItem('mbbc_deviceId');
-  if(!id){
-    id='dev-'+Date.now().toString(36)+'-'+Math.random().toString(36).substr(2,7);
-    localStorage.setItem('mbbc_deviceId',id);
-  }
+  if(!id){id='dev-'+Date.now().toString(36)+'-'+Math.random().toString(36).substr(2,7);localStorage.setItem('mbbc_deviceId',id);}
   return id;
 }
-function showLoading(on){
-  document.getElementById('loadingDiv').style.display=on?'flex':'none';
-}
+function showLoading(on){document.getElementById('loadingDiv').style.display=on?'flex':'none';}
 
-/* ===== 로그인 (PC슬롯 + 모바일슬롯 분리) ===== */
+/* ===== 로그인 ===== */
 window.login=async function(){
   var input=document.getElementById('loginInput').value.trim().toUpperCase();
   var err=document.getElementById('loginError');
@@ -604,56 +590,28 @@ window.login=async function(){
       var ss=await db.collection(COL_SES).doc(input).get();
       if(ss.exists){
         var sd=ss.data();
-        if(isMobile){
-          if(sd.mobileDeviceId && sd.mobileDeviceId!==did){
-            err.textContent='다른 휴대폰에서 이미 로그인 중입니다';
-            err.style.display='block';showLoading(false);return;
-          }
-        }else{
-          if(sd.pcDeviceId && sd.pcDeviceId!==did){
-            err.textContent='다른 PC에서 이미 로그인 중입니다';
-            err.style.display='block';showLoading(false);return;
-          }
-        }
+        if(isMobile){if(sd.mobileDeviceId&&sd.mobileDeviceId!==did){err.textContent='다른 휴대폰에서 이미 로그인 중입니다';err.style.display='block';showLoading(false);return;}}
+        else{if(sd.pcDeviceId&&sd.pcDeviceId!==did){err.textContent='다른 PC에서 이미 로그인 중입니다';err.style.display='block';showLoading(false);return;}}
       }
-      var updateData={loginTime:new Date().toISOString()};
-      if(isMobile){updateData.mobileDeviceId=did;}
-      else{updateData.pcDeviceId=did;}
-      await db.collection(COL_SES).doc(input).set(updateData,{merge:true});
+      var upd={loginTime:new Date().toISOString()};
+      if(isMobile)upd.mobileDeviceId=did; else upd.pcDeviceId=did;
+      await db.collection(COL_SES).doc(input).set(upd,{merge:true});
       window.currentUser={id:input,role:'member'};
       document.getElementById('loginScreen').style.display='none';
       document.getElementById('memberScreen').style.display='flex';
       loadFromStorage();drawBoard();startSignalListener();startConfigListener();
-    }else{
-      err.textContent='등록되지 않은 아이디입니다';err.style.display='block';
-    }
-  }catch(e){
-    err.textContent='오류: '+e.message;err.style.display='block';
-  }
+    }else{err.textContent='등록되지 않은 아이디입니다';err.style.display='block';}
+  }catch(e){err.textContent='오류: '+e.message;err.style.display='block';}
   showLoading(false);
 };
-document.getElementById('loginInput').addEventListener('keypress',function(e){
-  if(e.key==='Enter')window.login();
-});
+document.getElementById('loginInput').addEventListener('keypress',function(e){if(e.key==='Enter')window.login();});
 
-/* ===== 한국어 TTS ===== */
+/* ===== TTS ===== */
 window.speak=function(text){
-  try{
-    window.speechSynthesis.cancel();
-    var u=new SpeechSynthesisUtterance(text);
-    u.lang='ko-KR';u.volume=0.9;u.rate=1;u.pitch=0.9;
-    window.speechSynthesis.speak(u);
-  }catch(e){}
+  try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang='ko-KR';u.volume=0.9;u.rate=1;u.pitch=0.9;window.speechSynthesis.speak(u);}catch(e){}
 };
-
-/* ===== 영어 TTS (AI모드) ===== */
 function speakEnglish(text){
-  try{
-    window.speechSynthesis.cancel();
-    var u=new SpeechSynthesisUtterance(text);
-    u.lang='en-US';u.volume=0.9;u.rate=0.95;u.pitch=0.9;
-    window.speechSynthesis.speak(u);
-  }catch(e){}
+  try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.volume=0.9;u.rate=0.95;u.pitch=0.9;window.speechSynthesis.speak(u);}catch(e){}
 }
 
 /* ===== AI 모드 모달 (4초 자동 소멸) ===== */
@@ -678,21 +636,36 @@ window.activateAIMode=function(){
   var m=document.getElementById('aiModeActivation');
   m.querySelector('.ai-buttons').style.display='none';
   m.querySelector('.ai-loading').style.display='block';
-  setTimeout(function(){
-    m.style.display='none';
-    m.querySelector('.ai-buttons').style.display='flex';
-    m.querySelector('.ai-loading').style.display='none';
-  },3000);
+  setTimeout(function(){m.style.display='none';m.querySelector('.ai-buttons').style.display='flex';m.querySelector('.ai-loading').style.display='none';},3000);
 };
 window.deactivateAIMode=function(){
   var m=document.getElementById('aiModeDeactivation');
   m.querySelector('.ai-buttons').style.display='none';
   m.querySelector('.ai-loading').style.display='block';
-  setTimeout(function(){
-    m.style.display='none';
-    m.querySelector('.ai-buttons').style.display='flex';
-    m.querySelector('.ai-loading').style.display='none';
-  },2500);
+  setTimeout(function(){m.style.display='none';m.querySelector('.ai-buttons').style.display='flex';m.querySelector('.ai-loading').style.display='none';},2500);
+};
+
+/* ===== 손익 → 금액창 직접 표시 오버라이드 ===== */
+/* Start 버튼 활성화 색상 */
+window.startTracker=function(){
+  trackerActive=false; // 초기화 후 재실행
+  var el=document.getElementById('startAmt');
+  var amt=parseInt(el?el.value:0)||0;
+  if(amt<=0){alert('시작 금액을 입력해주세요');return;}
+  if(amt>100000000)amt=100000000;
+  trackerStart=amt;
+  trackerCurrent=amt;
+  trackerBets=[];
+  trackerActive=true;
+  if(el)el.value=amt;
+  var btn=document.querySelector('.tracker-start');
+  if(btn){btn.classList.add('active');}
+};
+window.updateTrackerDisplay=function(){
+  var el=document.getElementById('startAmt');
+  if(el && trackerActive){
+    el.value=trackerCurrent;
+  }
 };
 </script>
 
