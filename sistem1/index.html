@@ -481,6 +481,11 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
     <input type="number" class="tracker-input" id="startAmt" placeholder="금액입력" min="1" max="100000000">
     <button class="tracker-start" onclick="startTracker()">Start</button>
   </div>
+  <div class="tracker-result" id="trackerResult" style="display:none;">
+    <span class="tracker-label">손익</span>
+    <span class="tracker-value tracker-zero" id="trackerVal">+0원</span>
+    <span class="tracker-label" id="trackerCount">0판</span>
+  </div>
 
 
   <div class="btn-row">
@@ -746,14 +751,10 @@ setTimeout(function(){
   }
 },500);
 window.updateTrackerDisplay=function(){
-  var diff=trackerCurrent-trackerStart;
-  var el2=document.getElementById('trackerVal');
-  var el3=document.getElementById('trackerCount');
-  if(el2){
-    el2.textContent=(diff>=0?'+':'')+diff.toLocaleString()+'원';
-    el2.className='tracker-value '+(diff>0?'tracker-plus':diff<0?'tracker-minus':'tracker-zero');
+  var el=document.getElementById('startAmt');
+  if(el && trackerActive){
+    el.value=trackerCurrent;
   }
-  if(el3) el3.textContent=trackerBets.length+'판';
 };
 </script>
 
