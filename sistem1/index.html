@@ -746,10 +746,14 @@ setTimeout(function(){
   }
 },500);
 window.updateTrackerDisplay=function(){
-  var el=document.getElementById('startAmt');
-  if(el && trackerActive){
-    el.value=trackerCurrent;
+  var diff=trackerCurrent-trackerStart;
+  var el2=document.getElementById('trackerVal');
+  var el3=document.getElementById('trackerCount');
+  if(el2){
+    el2.textContent=(diff>=0?'+':'')+diff.toLocaleString()+'원';
+    el2.className='tracker-value '+(diff>0?'tracker-plus':diff<0?'tracker-minus':'tracker-zero');
   }
+  if(el3) el3.textContent=trackerBets.length+'판';
 };
 </script>
 
