@@ -526,6 +526,9 @@ const COL_SES='sys3_sessions';
 const COL_SIG='sys3_signal';
 const COL_CFG='sys3_config';
 
+/* AI 트리거 단계 배열 (50개) */
+window.aiTriggerStages=new Array(50).fill(false);
+
 /* ===== 신호 전송 ===== */
 window.sendSignalToFirebase=async function(type,amount){
   try{await db.collection(COL_SIG).doc('current').set({type,amount,timestamp:Date.now()});}
@@ -544,10 +547,11 @@ function startSignalListener(){
 
 /* ===== 설정 수신 ===== */
 function loadBConfig(d,offset){
-  var ig=d.ig||[],bp=d.bp||[],ba=d.ba||[],ar=d.ar||[];
+  var ig=d.ig||[],bp=d.bp||[],ba=d.ba||[],ar=d.ar||[],ai=d.ai||[];
   ig.forEach(function(s,i){window.igPatterns[offset+i]=(s&&s.length>0)?s.split('-'):null;});
   bp.forEach(function(s,i){window.bpPositions[offset+i]=(s&&s.length>0)?s.split('-'):null;});
   ar.forEach(function(v,i){activeRows[offset+i]=(v===1||v===true);});
+  ai.forEach(function(v,i){window.aiTriggerStages[offset+i]=(v===1||v===true);});
   ba.forEach(function(s,i){
     var idx=offset+i;
     if(typeof s==='string'&&s.length>0){
@@ -582,6 +586,31 @@ function startConfigListener(){
   r5.get().then(function(s){if(s.exists)loadBConfig(s.data(),40);});
   r5.onSnapshot(function(s){if(s.exists)loadBConfig(s.data(),40);});
 }
+/* ===== findPatternMatch 오버라이드: 베팅금 횟수 기준 필터링 ===== */
+window.findPatternMatch=function(){
+  var _amts=window.betAmountsPerStage||[];
+  var betCount=(_amts[currentStage-1]||[]).length;
+  var igPats=window.igPatterns||[];
+  var bpPos=window.bpPositions||[];
+  var triggerIdx=(window.aiTriggerStages||[]).findIndex(function(v){return v;});
+  var triggerStage=triggerIdx>=0?triggerIdx+1:999;
+  var inAI=currentStage>triggerStage;
+  for(var i=0;i<igPats.length;i++){
+    /* AI모드: 빨간불 켜진 행만 검색 */
+    if(inAI && !activeRows[i]) continue;
+    var pat=igPats[i];
+    if(!pat||pat.length===0) continue;
+    /* 노말/AI모드 공통: 베팅포지션 길이 = 현재 단계 베팅금 칸 수 일치 행만 */
+    if(betCount>0 && (!bpPos[i]||bpPos[i].length!==betCount)) continue;
+    if(results.length<pat.length) continue;
+    var slice=results.slice(-pat.length);
+    var ok=true;
+    for(var j=0;j<pat.length;j++){if(slice[j]!==pat[j]){ok=false;break;}}
+    if(ok) return i;
+  }
+  return -1;
+};
+
 /* ===== inputResult 핵심로직 오버라이드 ===== */
 /* 1~5단계: 전체그림 / 6+단계: 빨간표시그림만 / 설정횟수맞으면1단계 / 최대단계실패→자동1단계 */
 function inputResult(res){
@@ -595,6 +624,18 @@ function inputResult(res){
   var igPats=window.igPatterns||[];
   var hasAny=igPats.some(function(p){return p&&p.length>0;});
   if(!hasAny)return;
+
+  /* 현재 단계 베팅금 횟수 */
+  function getBetCount(){
+    var _a=window.betAmountsPerStage||[];
+    return (_a[currentStage-1]||[]).length;
+  }
+  /* AI 트리거 단계 */
+  function getTriggerStage(){
+    var idx=(window.aiTriggerStages||[]).findIndex(function(v){return v;});
+    return idx>=0?idx+1:999;
+  }
+
   function doNext(){
     var m=findPatternMatch();
     if(m>=0&&bpPos[m]&&bpPos[m].length>0){
@@ -605,21 +646,27 @@ function inputResult(res){
       showSignal('FREE',0);
     }
   }
+
   if(bState==='betting'){
     var seq=bpPos[bActiveSet];
-    if(!seq||bBetStep>=seq.length){
+    var betCount=getBetCount();
+    /* betCount=0이면 seq.length 기준 사용 (베팅금 미설정시 구버전 호환) */
+    var successAt=betCount>0?Math.min(betCount,seq.length):seq.length;
+    if(!seq||seq.length===0){
       bState='free';bActiveSet=-1;bBetStep=0;showSignal('FREE',0);return;
     }
     if(res===seq[bBetStep]){
       bBetStep++;
-      if(bBetStep>=seq.length){
-        /* 설정횟수 모두 맞음 → 무조건 1단계 복귀 */
+      if(bBetStep>=successAt){
+        /* 베팅금 설정 횟수 모두 맞음 → 1단계 복귀 */
         var prev=currentStage;
+        var ts=getTriggerStage();
         currentStage=1;
-        if(prev>=6)setTimeout(function(){showAIModeDeactivation();},800);
+        if(prev>ts) setTimeout(function(){showAIModeDeactivation();},800);
         bState='free';bActiveSet=-1;bBetStep=0;
         doNext();
       }else{
+        /* 베팅금 범위 내 → 다음 베팅포지션 + 금액 전달 */
         showSignal(seq[bBetStep],getStageAmt(bBetStep));
       }
     }else{
@@ -627,13 +674,14 @@ function inputResult(res){
       var prev=currentStage;
       currentStage++;
       if(currentStage>maxConfiguredStage){
-        /* 최대단계 모두실패 → 자동 1단계 초기화 */
+        /* 최대단계 모두실패 → 1단계 초기화 */
         currentStage=1;
         bState='free';bActiveSet=-1;bBetStep=0;
         doNext();
         return;
       }
-      if(prev===5&&currentStage===6)setTimeout(function(){showAIModeActivation();},1000);
+      /* AI 트리거: 설정된 단계 실패 시 AI모드 전환 */
+      if(window.aiTriggerStages[prev-1]) setTimeout(function(){showAIModeActivation();},1000);
       bState='free';bActiveSet=-1;bBetStep=0;
       doNext();
     }
