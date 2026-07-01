@@ -829,7 +829,7 @@ function startVoice(){
     if(t.includes('뱅커')||t.includes('뱅')||t.includes('banker')||t.includes('B')||t.includes('b')||t.includes('비')){ inputResult('B'); document.querySelector('.btn-b').style.transform='scale(0.93)'; setTimeout(function(){document.querySelector('.btn-b').style.transform='';},200); }
     else if(t.includes('플레이어')||t.includes('플')||t.includes('player')||t.includes('P')||t.includes('p')||t.includes('피')){ inputResult('P'); document.querySelector('.btn-p').style.transform='scale(0.93)'; setTimeout(function(){document.querySelector('.btn-p').style.transform='';},200); } };
   recognition.onerror = function(e){ if(e.error!=='no-speech') document.getElementById('voiceStatus').textContent='오류: '+e.error; };
-  recognition.onend = function(){ if(voiceActive) recognition.start(); };
+  recognition.onend = function(){ if(voiceActive){ try{ recognition.start(); }catch(e){ console.log('재시작오류:',e); } } };
   recognition.start();
 }
 function stopVoice(){ voiceActive=false; if(recognition) recognition.stop(); document.getElementById('voiceBtn').textContent='🎤 음성인식 시작'; document.getElementById('voiceBtn').style.background='linear-gradient(135deg,#6b46c1,#553c9a)'; document.getElementById('voiceStatus').textContent='음성인식 꺼짐'; document.getElementById('voiceStatus').style.color='rgba(255,255,255,0.5)'; }
