@@ -826,8 +826,8 @@ function startVoice(){
   recognition.interimResults = false;
   recognition.onstart = function(){ voiceActive=true; document.getElementById('voiceBtn').textContent='🔴 음성인식 중지'; document.getElementById('voiceBtn').style.background='linear-gradient(135deg,#e00,#900)'; document.getElementById('voiceStatus').textContent='🎤 말씀하세요... (뱅커/플레이어)'; document.getElementById('voiceStatus').style.color='#4caf50'; };
   recognition.onresult = function(e){ var t=e.results[e.results.length-1][0].transcript.trim(); document.getElementById('voiceStatus').textContent='인식: '+t;
-    if(t.includes('뱅커')||t.includes('banker')){ inputResult('B'); document.querySelector('.btn-b').style.transform='scale(0.93)'; setTimeout(function(){document.querySelector('.btn-b').style.transform='';},200); }
-    else if(t.includes('플레이어')||t.includes('player')){ inputResult('P'); document.querySelector('.btn-p').style.transform='scale(0.93)'; setTimeout(function(){document.querySelector('.btn-p').style.transform='';},200); } };
+    if(t.includes('뱅커')||t.includes('뱅')||t.includes('banker')||t.includes('B')||t.includes('b')||t.includes('비')){ inputResult('B'); document.querySelector('.btn-b').style.transform='scale(0.93)'; setTimeout(function(){document.querySelector('.btn-b').style.transform='';},200); }
+    else if(t.includes('플레이어')||t.includes('플')||t.includes('player')||t.includes('P')||t.includes('p')||t.includes('피')){ inputResult('P'); document.querySelector('.btn-p').style.transform='scale(0.93)'; setTimeout(function(){document.querySelector('.btn-p').style.transform='';},200); } };
   recognition.onerror = function(e){ document.getElementById('voiceStatus').textContent='오류: '+e.error; if(e.error==='no-speech') recognition.start(); };
   recognition.onend = function(){ if(voiceActive) recognition.start(); };
   recognition.start();
