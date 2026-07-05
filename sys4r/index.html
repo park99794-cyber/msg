@@ -483,26 +483,13 @@ input:checked + .p1-slider:before { transform:translateX(24px); }
   </div>
 
 
-  <div class="btn-row" style="margin-top:8px;">
-    <div style="width:72px;display:flex;flex-direction:column;gap:8px;align-items:center;">
-      <button class="icon-btn icon-bp" onclick="inputSpecialResult('BP')" title="뱅커 페어" style="width:48px;height:48px;border-radius:10px;background:#2a2a2a;border:1px solid #444;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
-        <svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="12" fill="none" stroke="#888" stroke-width="2"/><circle cx="19" cy="11" r="4.5" fill="#e53935"/></svg>
-      </button>
-      <button class="icon-btn icon-t" onclick="inputSpecialResult('T')" title="타이" style="width:48px;height:48px;border-radius:10px;background:#2a2a2a;border:1px solid #444;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
-        <svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="12" fill="#111" stroke="#888" stroke-width="2"/><path d="M6.2 21.8 A12 12 0 0 1 21.8 6.2 Z" fill="#22c55e"/></svg>
-      </button>
-    </div>
+  <div class="btn-row">
     <button class="btn-bp btn-b" onclick="inputResult('B')">B</button>
     <div class="mid-btns">
       <button class="btn-cancel" onclick="undoLast()">←</button>
       <button class="btn-reset-q" onclick="resetBoard();trackerActive=false;var _b=document.querySelector('.tracker-start');if(_b)_b.style.background='linear-gradient(135deg,#00bfff,#0080ff)';">Q리셋</button>
     </div>
     <button class="btn-bp btn-p" onclick="inputResult('P')">P</button>
-    <div style="width:72px;display:flex;flex-direction:column;gap:8px;align-items:center;">
-      <button class="icon-btn icon-pp" onclick="inputSpecialResult('PP')" title="플레이어 페어" style="width:48px;height:48px;border-radius:10px;background:#2a2a2a;border:1px solid #444;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;">
-        <svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="12" fill="none" stroke="#888" stroke-width="2"/><circle cx="11" cy="11" r="4.5" fill="#3b82f6"/></svg>
-      </button>
-    </div>
   </div>
   <div class="signal-wrap">
     <div class="signal-circle signal-red" id="circleRed"><span id="amtRed"></span></div>
@@ -604,104 +591,6 @@ function saveResult(patternIdx, isWin){
   };
   db.collection('sys4r_results').add(data).catch(function(e){console.log('결과저장오류:',e);});
 }
-
-/* ===== PP/BP(페어) · T(타이) 처리 ===== */
-/* results 배열에는 넣지 않음 (빅로드/패턴매칭은 B/P만 사용) */
-/* 대신 "몇번째 판(hand)에서 발생했는지"를 specialMarks 에 기록 → 보드에 표시 + 저장 */
-window.specialMarks = window.specialMarks || {};
-
-/* 하락폭은 "현재 진행중인 베팅세트에서 몇번째 벳까지 적중했는지"(bBetStep)로 결정:
-   - bBetStep===1 (1번째 벳 적중 후 발생) → 1단계 하락
-   - bBetStep>=2  (2번째 벳 이상 적중 후 발생) → 3단계 하락
-   바닥(1단계) 밑으로 못내려간 만큼은 그 시점 1단계 베팅금 설정값으로 승금액에 적립 */
-window.inputSpecialResult=function(type){
-  /* 방금 찍힌 마지막 판(results의 마지막 인덱스)에 페어/타이 마크 기록 */
-  var markIdx=results.length-1;
-  if(markIdx>=0){
-    window.specialMarks[markIdx]=window.specialMarks[markIdx]||[];
-    if(window.specialMarks[markIdx].indexOf(type)===-1) window.specialMarks[markIdx].push(type);
-  }
-
-  if(bState==='betting' && bBetStep>=1){
-    /* 이미 N번째 벳까지 적중한 뒤 발생 → 하락 로직 적용 */
-    var betStepIdx=bBetStep; /* 건너뛰는(스킵되는) 벳의 인덱스 */
-    var drop = (bBetStep>=2) ? 3 : 1;
-    var actualDrop = Math.min(drop, currentStage-1);
-    var shortfall = drop - actualDrop;
-    currentStage -= actualDrop;
-
-    if(shortfall>0){
-      /* currentStage는 이미 1(바닥)로 내려간 상태 → 1단계 설정금액 기준으로 부족분 계산 */
-      var amt = shortfall * getStageAmt(betStepIdx);
-      if(trackerActive && amt>0){
-        trackerCurrent += amt;
-        trackerBets.push({type:'ADJ',amount:amt,pending:false});
-        updateTrackerDisplay();
-      }
-      saveResult(bActiveSet,true);
-    }
-  }
-  /* 베팅 전(bBetStep===0)이거나 베팅 중이 아닐 때 → 단계 변동 없이 그냥 건너뜀 */
-
-  /* 베팅 중단 */
-  bState='free';bActiveSet=-1;bBetStep=0;
-  showSignal('FREE',0);
-  drawBoard();
-  saveToStorage();
-};
-
-/* ===== 보드에 페어/타이 마크 오버레이 ===== */
-var _origDrawBoard=window.drawBoard;
-window.drawBoard=function(){
-  _origDrawBoard();
-  try{
-    var svgEl=document.querySelector('#boardSvg svg');
-    if(!svgEl) return;
-    var big=calcBigRoad(results);
-    var pts=big.pts;
-    var maxCol=big.maxCol>=0?big.maxCol:0;
-    var offset=Math.max(0,maxCol-BRD_VCOLS+1);
-    var extra=[];
-    Object.keys(window.specialMarks).forEach(function(idxStr){
-      var idx=parseInt(idxStr,10);
-      var p=pts[idx];
-      if(!p||p.row>=BRD_ROWS) return;
-      var c2=p.col-offset;
-      if(c2<0||c2>=BRD_VCOLS) return;
-      var cx=c2*BRD_CELL+BRD_CELL/2, cy=p.row*BRD_CELL+BRD_CELL/2;
-      var types=window.specialMarks[idx]||[];
-      types.forEach(function(t,ti){
-        var color = t==='T' ? '#22c55e' : (t==='BP' ? '#ffeb3b' : '#3b82f6');
-        var ox = cx + BRD_CELL/2 - 5 - (ti*7);
-        var oy = cy - BRD_CELL/2 + 5;
-        extra.push('<circle cx="'+ox+'" cy="'+oy+'" r="3.2" fill="'+color+'" stroke="#000" stroke-width="0.6"/>');
-      });
-    });
-    if(extra.length) svgEl.insertAdjacentHTML('beforeend', extra.join(''));
-  }catch(e){console.log('마크표시오류:',e);}
-};
-
-/* ===== 저장/복원: 마크는 세션 내(베팅중)에서만 필요, 새로고침시 유지 불필요하므로 localStorage 저장은 생략 ===== */
-
-/* ===== 리셋/취소 시 마크도 함께 정리 ===== */
-var _origResetBoard=window.resetBoard;
-window.resetBoard=function(){
-  _origResetBoard();
-  if(results.length===0){
-    window.specialMarks={};
-    drawBoard();
-  }
-};
-var _origUndoLast=window.undoLast;
-window.undoLast=function(){
-  var removedIdx=results.length-1;
-  _origUndoLast();
-  if(window.specialMarks[removedIdx]){
-    delete window.specialMarks[removedIdx];
-    drawBoard();
-    saveToStorage();
-  }
-};
 
 function startConfigListener(){
   [['settings',0],['settings2',10],['settings3',20],['settings4',30],['settings5',40],
